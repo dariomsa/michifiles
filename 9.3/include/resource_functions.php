@@ -2686,6 +2686,7 @@ function get_resource_field_data($ref,$multi=false,$use_permissions=true,$origin
     # Find the resource type.
     if (is_null($originalref)) {$originalref = $ref;} # When a template has been selected, only show fields for the type of the original resource ref, not the template (which shows fields for all types)
     $rtype = sql_value("select resource_type value FROM resource WHERE ref='" . escape_check($originalref) . "'",0);
+    $rtype = ($rtype == "") ? 0 : $rtype;
 
     # If using metadata templates, 
     $templatesql = "";
@@ -2796,7 +2797,7 @@ function get_resource_field_data($ref,$multi=false,$use_permissions=true,$origin
 
     // Resource types can be configured to not have global fields in which case we only present the user fields valid for
     // this resource type
-    $inherit_global_fields = (bool) sql_value("SELECT inherit_global_fields AS `value` FROM resource_type WHERE ref = {$rtype}", true, "schema");
+    $inherit_global_fields = (bool) sql_value("SELECT inherit_global_fields AS `value` FROM resource_type WHERE ref = '{$rtype}'", true, "schema");
     if(!$inherit_global_fields && !$multi)
         {
         $validtypes = array($rtype);
