@@ -1307,8 +1307,13 @@ function get_resource_nodes($resource, $resource_type_field = null, $detailed = 
 function delete_resource_nodes($resourceid,$nodes=array())
     {
     if(!is_array($nodes))
-        {$nodes=array($nodes);}
-    sql_query("DELETE FROM resource_node WHERE resource ='$resourceid' AND node in ('" . implode("','",$nodes) . "')"); 
+        {
+        $nodes = array($nodes);
+        }
+
+    $nodes = array_filter($nodes, "is_numeric");
+
+    sql_query("DELETE FROM resource_node WHERE resource = '" . escape_check($resourceid) . "' AND node IN ('" . implode("', '", escape_check_array_values($nodes)) . "')"); 
 
     $field_nodes_arr = array();
     foreach ($nodes as $node)
