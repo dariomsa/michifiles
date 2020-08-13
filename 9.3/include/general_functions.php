@@ -1585,7 +1585,7 @@ function is_process_lock($name)
     
     # No lock file? return false
     if (!file_exists(get_temp_dir() . "/process_locks/" . $name)) {return false;}
-    
+    if (!is_readable(get_temp_dir() . "/process_locks/" . $name)) {return true;} // Lock exists and cannot read it so must assume it's still valid
     $time=trim(file_get_contents(get_temp_dir() . "/process_locks/" . $name));
     if ((time() - (int) $time)>$process_locks_max_seconds) {return false;} # Lock has expired
     
@@ -1594,7 +1594,6 @@ function is_process_lock($name)
     
 function set_process_lock($name)
     {
-    # Set a process lock
     file_put_contents(get_temp_dir() . "/process_locks/" . $name,time());
     // make sure this is editable by the server in case a process lock could be set by different system users
     chmod(get_temp_dir() . "/process_locks/" . $name,0777);
@@ -2607,7 +2606,7 @@ function validate_html($html)
 * 
 * @return string
 */
-function generateURL($url, $parameters = array(), $set_params = array())
+function generateURL($url, array $parameters = array(), array $set_params = array())
     {
     foreach($set_params as $set_param => $set_value)
         {

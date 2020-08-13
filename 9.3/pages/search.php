@@ -570,7 +570,8 @@ $rowstoretrieve = $per_page+$offset;
 if(($k=="" || $internal_share_access) && strpos($search,"!")===false && $archive_standard)
     {
     $collections=do_collections_search($search,$restypes,0,$order_by,$sort,$rowstoretrieve);
-    $colcount = count($collections);
+    try {$colcount = count($collections);}
+    catch (Exception $e) {$colcount = 0;}
     $resourcestoretrieve = max(($rowstoretrieve-$colcount),0);
     }
 else
