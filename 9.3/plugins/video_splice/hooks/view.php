@@ -178,6 +178,7 @@ function HookVideo_spliceViewAfterresourceactions()
 global $videojs;
 if (isset($preview) && $preview)
 	{
+	$random_param=rand();
 	if (!$videojs) 
 		{ ?>
 		</table>
@@ -204,7 +205,7 @@ if (isset($preview) && $preview)
 				class="video-js vjs-default-skin vjs-big-play-centered" 
 				poster=""
 			>
-			<source src="<?php echo convert_path_to_url($target) ?>" type="video/mp4"/>
+			<source src="<?php echo convert_path_to_url($target)."?alwaysload=$random_param" ?>" type="video/mp4"/>
 			<p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
 			<?php hook("html5videoextra"); ?>
 			</video>
