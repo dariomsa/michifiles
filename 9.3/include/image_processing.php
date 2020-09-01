@@ -1657,7 +1657,7 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
             }
 
             // Extensions for which the alpha/ matte channel should not be set to Off (i.e. +matte option) *** '+matte' no longer exists but is the same as '-alpha off'
-            $extensions_no_alpha_off = array('png', 'gif', 'tif');
+            $extensions_no_alpha_off = array('png', 'gif', 'tif', 'psd');
             
             $preview_quality=get_preview_quality($ps[$n]['id']);
        
