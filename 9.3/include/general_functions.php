@@ -1087,7 +1087,6 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
     // use an external SMTP server? (e.g. Gmail)
     if ($use_smtp) {
         $mail->IsSMTP(); // enable SMTP
-        $mail->SMTPDebug = $debug_log ? 1 : 0;  // debugging: 1 = errors and messages, 2 = messages only
         $mail->SMTPAuth = $smtp_auth;  // authentication enabled/disabled
         $mail->SMTPSecure = $smtp_secure; // '', 'tls' or 'ssl'
         $mail->Host = $smtp_host; // hostname
@@ -1750,9 +1749,15 @@ function get_temp_dir($asUrl = false,$uniqid="")
     if ($uniqid!=""){
         $uniqid=str_replace("../","",$uniqid);//restrict to forward-only movements
         $result.="/$uniqid";
-        if(!is_dir($result)){
+        if(!is_dir($result))
+            {
             // If it does not exist, create it.
-            mkdir($result, 0777,true);
+            try {
+                mkdir($result, 0777,true);
+            } 
+            catch (Exception $e) {
+                debug("get_temp_dir: Attempt to create folder '$result' failed. Reason: {$e->getMessage()}");  
+            }
         }
     }
     
