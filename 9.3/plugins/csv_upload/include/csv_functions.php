@@ -239,7 +239,7 @@ function csv_upload_process($filename,&$meta,$resource_types,&$messages,$max_err
         else
             {
             // Get status to set
-            if($csv_set_options["status_column"] != "")
+            if($csv_set_options["status_column"] != "" && in_array($csv_set_options["status_column"],array_keys($line)))
                 {
                 $setstatus = $line[$csv_set_options["status_column"]];
                 if (!is_numeric($setstatus))
@@ -254,7 +254,7 @@ function csv_upload_process($filename,&$meta,$resource_types,&$messages,$max_err
                 }
 
             // Get access to set
-            if($csv_set_options["access_column"] != "")
+            if($csv_set_options["access_column"] != "" && in_array($csv_set_options["access_column"],array_keys($line)))
                 {
                 $setaccess = $line[$csv_set_options["access_column"]];
                 if (!is_numeric($setaccess))
