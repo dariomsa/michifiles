@@ -1605,8 +1605,9 @@ function check_access_key_collection($collection, $key)
     $resources = get_collection_resources($collection);
 
    
-    if(0 == count($resources))
+    if(!is_array($resources) || 0 == count($resources))
         {
+        // No resources; treat as failure
         return false;
         }
 
