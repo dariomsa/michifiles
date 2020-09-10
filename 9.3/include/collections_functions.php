@@ -991,13 +991,20 @@ function get_max_theme_levels(){
 
 function get_theme_headers($themes=array())
 	{
+    global $theme_category_levels;
+
 	# Return a list of theme headers, i.e. theme categories
 	#return sql_array("select theme value,count(*) c from collection where public=1 and length(theme)>0 group by theme order by theme");
 	# Work out which theme category level we are selecting based on the higher selected levels provided.
 	$selecting="theme";
 
 	$theme_path = "";	
-	$sql="";	
+    $sql="";	
+    if(count($themes) > $theme_category_levels-1)
+        {
+        return array();
+        }
+
 	for ($x=0;$x<count($themes);$x++){		
 		if ($x>0) $theme_path .= "|";		
 		$theme_path .= $themes[$x];		
@@ -2895,7 +2902,7 @@ function makeFilenameUnique($base_values, $filename, $dupe_string, $extension, $
 */
 function new_featured_collection_form(array $themearray = array())
     {
-    global $lang;
+    global $lang, $theme_category_levels;
 
     if(!checkperm('h'))
         {
@@ -2921,7 +2928,7 @@ function new_featured_collection_form(array $themearray = array())
             </div>
 
         <?php
-        if(0 < $themes_count)
+        if(0 < $themes_count && $themes_count < $theme_category_levels-1)
             {
             ?>
             <div class="Question">
