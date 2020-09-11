@@ -1804,14 +1804,16 @@ function update_collection_order($neworder,$collection,$offset=0)
 		exit ("Error: invalid input to update collection function.");
 	}
 
-	$updatesql= "update collection_resource set sortorder=(case resource ";
-	$counter = 1 + $offset;
-	foreach ($neworder as $colresource){
-		$updatesql.= "when '" . escape_check($colresource) . "' then '$counter' ";
-		$counter++;
-	}
-	$updatesql.= "else sortorder END) WHERE collection='" . escape_check($collection) . "'";
-	sql_query($updatesql);
+    if (count($neworder)>0) {
+        $updatesql= "update collection_resource set sortorder=(case resource ";
+        $counter = 1 + $offset;
+        foreach ($neworder as $colresource){
+            $updatesql.= "when '" . escape_check($colresource) . "' then '$counter' ";
+            $counter++;
+        }
+        $updatesql.= "else sortorder END) WHERE collection='" . escape_check($collection) . "'";
+        sql_query($updatesql);
+    }
 	$updatesql="update collection_resource set sortorder=99999 WHERE collection='" . escape_check($collection) . "' and sortorder is NULL";
 	sql_query($updatesql);
 	}
@@ -2119,7 +2121,11 @@ function collection_max_access($collection)
 	{
 	# Returns the maximum access (the most permissive) that the current user has to the resources in $collection.
 	$maxaccess=2;
-	$result=do_search("!collection" . $collection);
+    $result=do_search("!collection" . $collection);
+    if (!is_array($result))
+        {
+        $result = array();
+        }
 	for ($n=0;$n<count($result);$n++)
 		{
 		$ref=$result[$n]["ref"];
@@ -2141,6 +2147,10 @@ function collection_min_access($collection)
     else
         {
         $result = do_search("!collection{$collection}", '', 'relevance', 0, -1, 'desc', false, '', false, '');
+        if (!is_array($result))
+            {
+            $result = array();
+            }
         }
 
     for($n = 0; $n < count($result); $n++)
