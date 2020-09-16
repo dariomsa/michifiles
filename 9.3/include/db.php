@@ -1177,13 +1177,26 @@ function clear_query_cache($cache)
 
 function check_db_structs($verbose=false)
 	{
-	CheckDBStruct("dbstruct",$verbose);
-	global $plugins;
-	for ($n=0;$n<count($plugins);$n++)
-		{
-		CheckDBStruct("plugins/" . $plugins[$n] . "/dbstruct");
-		}
-	hook("checkdbstruct");
+    // Ensure two processes are not being executed at the same time (e.g. during an upgrade)
+    if(is_process_lock('database_update_in_progress'))
+        {
+        show_upgrade_in_progress(true);
+        exit();
+        }
+    set_process_lock('database_update_in_progress');
+
+    // Check the structure of the core tables.
+    CheckDBStruct("dbstruct",$verbose);
+    
+    // Check the structure of all active plugins.
+        global $plugins;
+        for ($n=0;$n<count($plugins);$n++)
+                {
+                CheckDBStruct("plugins/" . $plugins[$n] . "/dbstruct");
+                }
+    hook("checkdbstruct");
+    
+    clear_process_lock('database_update_in_progress');
 	}
 
 function CheckDBStruct($path,$verbose=false)
