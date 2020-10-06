@@ -65,7 +65,6 @@ if($b_fixed_field)
             if($found_key===false)
                 {
                 $node_strings_not_found[]=$match;
-                echo "adding match:" . $match;
                 }
             else
                 {
