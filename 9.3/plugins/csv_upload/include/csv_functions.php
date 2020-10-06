@@ -173,14 +173,18 @@ function csv_upload_process($filename,&$meta,$resource_types,&$messages,$max_err
             if($csv_set_options["id_column_match"] == 0)
                 {
                 // Matching on resource ID
-                $resource_id = (int)$line[$csv_set_options["id_column"]];
+                $id_column = isset($csv_set_options["id_column"]) ? $csv_set_options["id_column"] : "";
+                $resource_id = isset($line[$id_column]) ? $line[$id_column] : "";
                 if(!in_array($resource_id,$replaceresources))
                     {
-                    array_push ($messages,"Error: Invalid resource (" . $resource_id . ")specified in line " . count($line));
+                    $logtext = "Error: Invalid resource id: '" . $resource_id . "' specified in line " . count($line);
+                    csv_upload_log($logfile,$logtext);
+                    array_push ($messages,$logtext);
+                    
 			        $error_count++;
 			        continue;
                     }
-                $resourcerefs = array($resource_id);
+                $resourcerefs = array((int) $resource_id);
                 }
             else
                 {
@@ -527,6 +531,12 @@ function csv_upload_process($filename,&$meta,$resource_types,&$messages,$max_err
             // Set values if processing
             foreach($resourcerefs as $resource_id)
                 {
+                # if the resource_id is not an integer do not continue with following actions
+                if ((string)$resource_id !== (string)(int)$resource_id)
+                    {
+                    continue; 
+                    }
+                
                 $nodes_to_add       = array();
                 $nodes_to_remove    = array();
                 if ($processcsv)
