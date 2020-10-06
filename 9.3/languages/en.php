@@ -1796,6 +1796,7 @@ $lang["done"]="Done.";
 
 $lang["latlong"]="Lat / long";
 $lang["geographicsearch"]="Geographic search";
+$lang["geographicsearchmissing"]="Geographic search criteria missing";
 $lang["geographicsearchresults"]="Geographic search results";
 
 $lang["geographicsearch_help"]="Drag to select a search area.";

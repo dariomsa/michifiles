@@ -107,7 +107,7 @@ function upload_file($ref,$no_exif=false,$revert=false,$autorotate=false,$file_p
             elseif (isset($_FILES['Filedata'])) 
                 {
                 $processfile=$_FILES['Filedata'];# Java upload (at least) needs this
-                } 
+                }
 
             # Work out the filename.
             if (isset($_REQUEST['name']))
@@ -120,7 +120,14 @@ function upload_file($ref,$no_exif=false,$revert=false,$autorotate=false,$file_p
                 }
             else
                 {
-                $filename=$processfile['name']; # Standard uploads
+                if(isset($processfile['name']))
+                    {
+                    $filename=$processfile['name']; # Standard uploads
+                    }
+                else
+                    {
+                    exit($lang["posted-file-not-found"]);
+                    } 
                 }
 
             global $filename_field;
