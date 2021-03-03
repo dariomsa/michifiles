@@ -1807,24 +1807,28 @@ function get_tree_strings($resource_nodes,$allnodes = false)
     global $category_tree_add_parents;
     // Arrange all passed nodes with parents first so that unnecessary paths can be removed
     $orderednodes = array();
+    $orderednoderefs = array();
     // Array with node ids as indexes to ease parent tracking
     $treenodes = array();
 
     while(count($resource_nodes) > 0)
         {
         $todocount = count($resource_nodes);
+        $resource_nodes_ref_array = array_column($resource_nodes,"ref");   
         for($n=0;$n < $todocount;$n++)
             {            
             if(
-                in_array($resource_nodes[$n]["parent"],array_column($resource_nodes,"ref"))
+                isset($resource_nodes_ref_array[$resource_nodes[$n]["parent"]])
                 &&
-                !in_array($resource_nodes[$n]["parent"],array_column($orderednodes,"ref"))
+                !isset($orderednoderefs[$resource_nodes[$n]["parent"]])
                 )
                 {
                 // Don't add yet, add once parent has been added
+                // By continuing, the resource_nodes array is unchanged, so array column does not need to be reestablished
                 continue;
                 }
             $orderednodes[] = $resource_nodes[$n];
+            $orderednoderefs[] = $resource_nodes[$n]["parent"];
             $treenodes[$resource_nodes[$n]["ref"]] = $resource_nodes[$n];
             unset($resource_nodes[$n]);
             }
