@@ -297,9 +297,14 @@ jQuery('#checkhtml').click(function(e) {
 		var checktext = editor.getData();
 	} else {
 		var checktext = jQuery('#text').val();
-	}
-
-	jQuery.get('../tools/check_html.php', {'text': checktext}, function(response, status, xhr){
+    }
+    
+	jQuery.post(
+        '../tools/check_html.php', 
+        {
+            'text': checktext, 
+            <?php echo generateAjaxToken('admin_content_edit'); ?>,
+        }, function(response, status, xhr){
 		CentralSpaceHideLoading();
 		jQuery('#submissionResponse').html(response);
 	});
@@ -309,3 +314,4 @@ jQuery('#checkhtml').click(function(e) {
 <?php		
 include "../../include/footer.php";
 ?>
+
