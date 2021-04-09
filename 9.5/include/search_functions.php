@@ -1130,7 +1130,7 @@ function search_filter($search,$archive,$restypes,$starsearch,$recent_search_day
 function search_special($search,$sql_join,$fetchrows,$sql_prefix,$sql_suffix,$order_by,$orig_order,$select,$sql_filter,$archive,$return_disk_usage,$return_refs_only=false, $returnsql=false)
     {
     # Process special searches. These return early with results.
-    global $FIXED_LIST_FIELD_TYPES, $lang, $k;
+    global $FIXED_LIST_FIELD_TYPES, $lang, $k, $USER_SELECTION_COLLECTION;
     
     # View Last
     if (substr($search,0,5)=="!last") 
@@ -1299,7 +1299,7 @@ function search_special($search,$sql_join,$fetchrows,$sql_prefix,$sql_suffix,$or
                 include_once('research_functions.php');
                 $research_collections = array_column(get_research_requests(), 'collection');
                 }
-            $validcollections = array_unique(array_merge($user_collections, $public_collections, $request_collections, $research_collections));
+            $validcollections = array_unique(array_merge($user_collections, array($USER_SELECTION_COLLECTION), $public_collections, $request_collections, $research_collections));
             }
 
         if(in_array($collection, $validcollections) || featured_collection_check_access_control($collection))
