@@ -791,7 +791,11 @@ else if ($basket)
         
 		<?php if (!hook("rendercollectionthumb")){?>
         <?php
-        
+        if (isset($result[$n]["access"]) && $result[$n]["access"]==0 && !checkperm("g") && !$internal_share_access)
+            {
+            # Resource access is open but user does not have the 'g' permission. Set access to restricted. If they have been granted specific access this will be added next
+            $result[$n]["access"]=1; 
+            }
         $access = isset($result[$n]["access"]) ? $result[$n]["access"] : get_resource_access($result[$n]);
 		$use_watermark=check_use_watermark();?>
 		<table border="0" class="CollectionResourceAlign"><tr><td>
@@ -1151,10 +1155,13 @@ else
         
 		<?php if (!hook("rendercollectionthumb")){?>
         <?php
-
-		// Resolve access for watermark checking
-		$access = get_resource_access($result[$n]);
-
+        
+        if (isset($result[$n]["access"]) && $result[$n]["access"]==0 && !checkperm("g") && !$internal_share_access)
+            {
+            # Resource access is open but user does not have the 'g' permission. Set access to restricted. If they have been granted specific access this will be added next
+            $result[$n]["access"]=1; 
+            }
+        $access = isset($result[$n]["access"]) ? $result[$n]["access"] : get_resource_access($result[$n]);
 		$use_watermark=check_use_watermark();?>
 		<table border="0" class="CollectionResourceAlign"><tr><td>
 				<a style="position:relative;" onclick="return <?php echo ($resource_view_modal?"Modal":"CentralSpace") ?>Load(this,true);" href="<?php echo $baseurl_short?>pages/view.php?ref=<?php echo urlencode($ref) ?>&search=<?php echo urlencode("!collection" . $usercollection)?>&order_by=<?php echo urlencode($order_by)?>&sort=<?php echo urlencode($sort)?>&k=<?php echo urlencode($k)?>&curpos=<?php echo $n ?>">
