@@ -76,8 +76,8 @@ function HookTMS_linkEditEdithidefield($field)
 
 function HookTms_linkAllAdditionalvalcheck($fields, $fieldsitem)
 	{
-    global $ref,$val,$tms_link_object_id_field,$resource,$tms_link_resource_types,$lang;
-    
+	global $ref,$val,$tms_link_object_id_field,$resource,$tms_link_resource_types,$lang;
+
     if(!tms_link_is_rs_uid_field($fieldsitem['ref']))
         {
         return false;
@@ -103,13 +103,7 @@ function HookTms_linkAllAdditionalvalcheck($fields, $fieldsitem)
 		$tmsdata = tms_link_get_tms_data('', $tms_object_id);
 
 		// Make sure we actually do save this data, even if we return an error
-		$result_update_field = update_field($ref, $module['rs_uid_field'], $tms_object_id);
-        
-        if ($result_update_field !== true)
-            {
-            $error = $result_update_field;
-            return $error;
-            }
+		update_field($ref, $module['rs_uid_field'], $tms_object_id);
         
         if(!is_array($tmsdata) && $ref < 0)
 			{

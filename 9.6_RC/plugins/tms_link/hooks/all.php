@@ -87,12 +87,6 @@ function HookTms_linkAllUpdate_field($resource, $field, $value, $existing)
     $tms_object_id = intval($value);
     $tmsdata = tms_link_get_tms_data($resource, $tms_object_id);
 
-    if (!is_array($tmsdata))
-        {
-        // return error message
-        return $tmsdata;
-        }
-
     debug("tms_link: updating resource id #" . $resource);
 
     foreach(tms_link_get_modules_mappings() as $module)
