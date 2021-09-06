@@ -273,7 +273,7 @@ function do_report($ref,$from_y,$from_m,$from_d,$to_y,$to_m,$to_d,$download=true
 * Creates a new automatic periodic e-mail report
 *
 */
-function create_periodic_email($user, $report, $period, $email_days, array $user_groups, array $search_params)
+function create_periodic_email($user, $report, $period, $email_days, array $user_groups)
     {
     # Delete any matching rows for this report/period.
     $query = sprintf("
@@ -295,22 +295,19 @@ function create_periodic_email($user, $report, $period, $email_days, array $user
                                                    user,
                                                    report,
                                                    period,
-                                                   email_days,
-                                                   search_params
+                                                   email_days
                                                )
                  VALUES (
                             '%s',  # user
                             '%s',  # report
                             '%s',  # period
-                            '%s',  # email_days
-                            '%s'   # search_params
+                            '%s'   # email_days
                         );
         ",
         escape_check($user),
         escape_check($report),
         escape_check($period),
-        escape_check($email_days),
-        escape_check(json_encode($search_params, JSON_UNESCAPED_UNICODE | JSON_NUMERIC_CHECK))
+        escape_check($email_days)
     );
     sql_query($query);
     $ref = sql_insert_id();
@@ -380,10 +377,8 @@ function send_periodic_report_emails($echo_out = true, $toemail=true)
         // Translates the report name.
         $report["name"] = lang_or_i18n_get_translated($report["name"], "report-");
 
-        $search_params = (trim($report['search_params']) !== '' ? json_decode($report['search_params'], true) : []);
-
         # Generate report (table or CSV)
-        $output=do_report($report["report"], $from_y, $from_m, $from_d, $to_y, $to_m, $to_d,false,true, $toemail, $search_params);
+        $output=do_report($report["report"], $from_y, $from_m, $from_d, $to_y, $to_m, $to_d,false,true, $toemail);
 
         // Formulate a title
         $title = $report["name"] . ": " . str_replace("?",$report["period"],$lang["lastndays"]);
