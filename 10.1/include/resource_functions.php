@@ -5895,6 +5895,8 @@ function update_disk_usage($resource)
  */
 function update_disk_usage_cron()
     {
+    global $update_disk_usage_batch_size;
+
     $lastrun = get_sysvar('last_update_disk_usage_cron', '1970-01-01');
     # Don't run if already run in last 24 hours.
     if (time()-strtotime($lastrun) < 24*60*60)
@@ -5910,7 +5912,7 @@ function update_disk_usage_cron()
             AND disk_usage_last_updated IS null
                 OR datediff(now(),disk_usage_last_updated)>30
         ORDER BY disk_usage_last_updated ASC
-        LIMIT 20000",
+        LIMIT " . (int) $update_disk_usage_batch_size,
         []);
     foreach ($resources as $resource)
         {
