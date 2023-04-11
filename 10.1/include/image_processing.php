@@ -3425,7 +3425,7 @@ function upload_file_by_url(int $ref,bool $no_exif=false,bool $revert=false,bool
  */ 
 function delete_previews($resource,$alternative=-1)
     {
-    global $ffmpeg_preview_extension;
+    global $ffmpeg_preview_extension, $watermark;
     
     // If a resource array has been passed we already have the extensions
     if(is_array($resource))
@@ -3462,12 +3462,21 @@ function delete_previews($resource,$alternative=-1)
                 {
                 unlink($previewpath);
                 }
+            if (isset($watermark))
+                {
+                $wm_path = get_resource_path($resource, true, $presize, false, "jpg", -1, $page, true, "",$alternative);
+                if (file_exists($wm_path))
+                    {
+                    unlink($wm_path);
+                    }
+                }
             }
         }
 
     $delete_prefixes = array();
     $delete_prefixes[] = "resized_";
     $delete_prefixes[] = "tile_";
+    $delete_prefixes[] = "tmp_";
 
     if(!file_exists($resourcefolder))
         {
