@@ -61,6 +61,7 @@ $postvals["modeselect_" . $revert_field] = "Revert";
 $save_errors=save_resource_data_multi($colrevert,[],$postvals);
 
 $revertedval = get_data_by_field($resourcea,$revert_field);
+echo $resourcea . " " . print_r($revertedval,true) . PHP_EOL;
 if($revertedval != "Fruit/Orange")
     {
     echo "SUBTEST B";

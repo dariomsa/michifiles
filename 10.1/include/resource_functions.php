@@ -2452,6 +2452,11 @@ function update_field($resource, $field, $value, array &$errors = array(), $log=
     global $category_tree_add_parents, $userref, $FIXED_LIST_FIELD_TYPES, $lang, $range_separator;
 
     $resource_data = get_resource_data($resource);
+    if ($resource_data === false)
+        {
+        $errors[] = $lang["resourcenotfound"] . " " . (string) $resource;
+        return false;
+        }
     if ($resource_data["lock_user"] > 0 && $resource_data["lock_user"] != $userref)
         {
         $errors[] = get_resource_lock_message($resource_data["lock_user"]);
@@ -7687,7 +7692,7 @@ function get_data_by_field($resource, $field, bool $flatten = true)
 
     $rtf_ref = $get_data_by_field_fct_field_cache[$field]['ref'];
     $rtf_type = $get_data_by_field_fct_field_cache[$field]['type'];
-
+echo $rtf_ref;
     if(!$fetch_all_resources && $rtf_type == FIELD_TYPE_CATEGORY_TREE)
         {
         $tree_nodes = get_resource_nodes($resource, $rtf_ref, true);
