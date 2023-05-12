@@ -4153,18 +4153,35 @@ function save_resource_custom_access($resource)
 		}
 	}
 
-function get_custom_access($resource,$usergroup,$return_default=true)
-	{
-	global $custom_access,$default_customaccess;
-	if ($custom_access==false) {return 0;} # Custom access disabled? Always return 'open' access for resources marked as custom.
+/**
+ * Lookup custom access value for a resource
+ *
+ * @param  int     $resource         Resource ID.
+ * @param  int     $usergroup        User group ID.
+ * @param  bool    $return_default   Return default custom access value from config. $default_customaccess.
+ * 
+ * @return mixed   False if custom access is disabled or there is no custom access value set for this resource.
+ *                 Int representing custom access level if set; 0 - open, 1 - restricted, 2 - confidential.
+ */
+function get_custom_access($resource, $usergroup, $return_default = true)
+    {
+    global $custom_access, $default_customaccess;
 
-	$result=ps_value("select access value from resource_custom_access where resource=? and usergroup=?",array("i",$resource,"i",$usergroup),'');
-	if($result=='' && $return_default)
-		{
-		return $default_customaccess;
-		}
-	return $result;
-	}
+    if ($custom_access == false) {return false;}
+
+    $result = ps_value("select access value from resource_custom_access where resource = ? and usergroup = ?", array("i", $resource, "i", $usergroup), '');
+
+    if ($result === '' && $return_default)
+        {
+        return $default_customaccess;
+        }
+    else if ($result === '')
+        {
+        return false;
+        }
+
+    return $result;
+    }
 
 
 /**
@@ -5035,7 +5052,7 @@ function get_resource_access($resource)
     global $customgroupaccess,$customuseraccess, $internal_share_access, $k,$uploader_view_override, $userref,
         $prevent_open_access_on_edit_for_active, $open_access_for_contributor,
         $userref,$usergroup, $usersearchfilter, $search_all_workflow_states,
-        $userderestrictfilter, $userdata;
+        $userderestrictfilter, $userdata, $custom_access;
 	# $resource may be a resource_data array from a search, in which case, many of the permissions checks are already done.
 
 	# Returns the access that the currently logged-in user has to $resource.
@@ -5097,17 +5114,34 @@ function get_resource_access($resource)
 		return 0;
 		}
 
-	if ($access==3)
-		{
-		$customgroupaccess=true;
-		# Load custom access level
-		if ($passthru=="no"){
-			$access=get_custom_access($resource,$usergroup);
-			}
-		else {
-			$access=$resource['group_access'];
-		}
-	}
+    if ($access == 3)
+        {
+        $customgroupaccess = true;
+        # Load custom access level
+        if ($passthru == "no")
+            {
+            $access = get_custom_access($resource, $usergroup);
+            if ($access === false)
+                {
+                # Custom access disabled? Always return 'open' access for resources marked as custom.
+                $access = 0;
+                $customgroupaccess = false;
+                }
+            }
+        else
+            {
+            if ($custom_access)
+                {
+                $access = $resource['group_access'];
+                }
+            else
+                {
+                # Custom access disabled? Always return 'open' access for resources marked as custom.
+                $access = 0;
+                $customgroupaccess = false;
+                }
+            }
+        }
 
 	if ($access == 1 && get_edit_access($ref,$resourcedata['archive'],false,$resourcedata) && !$prevent_open_access_on_edit_for_active)
 		{
@@ -5144,7 +5178,7 @@ function get_resource_access($resource)
         $customuseraccess=true;
         return (int) $userspecific;
         }        
-    if (isset($groupspecific) && $groupspecific !== "")
+    if (isset($groupspecific) && $groupspecific !== false)
         {
         $customgroupaccess=true;
         return (int) $groupspecific;
@@ -5286,7 +5320,7 @@ function resource_download_allowed($resource,$size,$resource_type,$alternative=-
 		# Only if no specific user access override (i.e. they have successfully requested this size).
 		$usercustomaccess = get_custom_access_user($resource,$userref);
 		$usergroupcustomaccess = get_custom_access($resource,$usergroup);
-		if (($usercustomaccess === false || !($usercustomaccess==='0')) && ($usergroupcustomaccess === false || !($usergroupcustomaccess==='0'))) {return false;}
+		if (($usercustomaccess === false || !($usercustomaccess === 0)) && ($usergroupcustomaccess === false || !($usergroupcustomaccess === 0))) {return false;}
         }
 
     if(($size == "" || $size == "hpr" || getval("noattach","") == "")  && intval($user_dl_limit) > 0)
