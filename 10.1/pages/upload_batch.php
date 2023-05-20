@@ -1044,7 +1044,7 @@ jQuery(document).ready(function () {
     ?>
 
 
-    uppy = new Uppy.Uppy({
+    uppy = new Uppy.Core({
         debug: <?php echo $debug_log ? "true" : "false" ?>,
         autoProceed: false,
         restrictions: {
