@@ -1246,7 +1246,7 @@ if (!hook("replacesearchheader")) # Always show search header now.
                     {
                     if (isset($searchparams["offset"]))
                         {
-                        $new_offset = floor($searchparams["offset"] / $results_display_array[$n]) * $results_display_array[$n];
+                        $new_offset = floor($searchparams["offset"] / max($results_display_array[$n],1)) * $results_display_array[$n];
                         }
                     ?>
                     <option <?php if($per_page == $results_display_array[$n]) { ?>selected="selected"<?php } ?> value="<?php echo generateURL($baseurl_short."pages/search.php",$searchparams,array("per_page"=>$results_display_array[$n],"offset"=>$new_offset)); ?>"><?php echo str_replace("?",$results_display_array[$n],$lang["perpage_option"]); ?></option>
@@ -1314,9 +1314,9 @@ if (!hook("replacesearchheader")) # Always show search header now.
         <?php } ?>      
         
     <?php
-    $totalpages=ceil($result_count/$per_page);
+    $totalpages=$per_page==0 ? 1 : ceil($result_count/$per_page);
     if ($offset>$result_count) {$offset=0;}
-    $curpage=floor($offset/$per_page)+1;
+    $curpage=$per_page==0 ? 1 : floor($offset/$per_page)+1;
     
     ?>
     </div>
@@ -1573,7 +1573,7 @@ if (!hook("replacesearchheader")) # Always show search header now.
             {
             // This is used to ensure that all resource panels are the same height 
             $resource_panel_height_max = 0;            
-            for ($n=0;$n<$result_count-$offset && $n<$resourcestoretrieve;$n++)
+            for ($n=0;$n<$result_count-$offset && $n<$resources_count && $n<$resourcestoretrieve;$n++)
                 {
                 # Allow alternative configuration settings for this resource type.
                 resource_type_config_override($result[$n]["resource_type"]);
