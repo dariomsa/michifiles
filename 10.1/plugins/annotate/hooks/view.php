@@ -93,7 +93,7 @@ function HookAnnotateViewRenderinnerresourcepreview()
             ?>
             <div id="wrapper" class="annotate-view-wrapper">
                 <div>
-                <img id="toAnnotate" onload="annotate(<?php echo $ref?>,'<?php echo $k?>','<?php echo $w?>','<?php echo $h?>',<?php echo getval("annotate_toggle",true)?>, 1, <?php echo $modal; ?>);" src="<?php echo $imageurl?>" id="previewimage" class="Picture" GALLERYIMG="no" style="display:block;"   />
+                <img id="toAnnotate" onload="annotate(<?php echo (int) $ref?>,'<?php echo escape_quoted_data($k)?>','<?php echo escape_quoted_data($w)?>','<?php echo escape_quoted_data($h)?>',<?php echo escape_quoted_data(getval("annotate_toggle",true))?>, 1, <?php echo escape_quoted_data($modal); ?>);" src="<?php echo escape_quoted_data($imageurl)?>" id="previewimage" class="Picture" GALLERYIMG="no" style="display:block;"   />
                 </div>
 
                 <div class="annotate-view-preview-links" >
@@ -110,7 +110,7 @@ function HookAnnotateViewRenderinnerresourcepreview()
                     "k"         => $k
                     ); ?>
                     
-                    <a class="enterLink" href="<?php echo generateURL($baseurl_short . "pages/preview.php", $urlparams); ?>" title="<?php echo $lang["fullscreenpreview"]?>"><?php echo LINK_CARET . $lang["fullscreenpreview"]?></a>
+                    <a class="enterLink" href="<?php echo generateURL($baseurl_short . "pages/preview.php", $urlparams); ?>" title="<?php echo escape_quoted_data($lang["fullscreenpreview"])?>"><?php echo LINK_CARET . escape_quoted_data($lang["fullscreenpreview"])?></a>
                 <?php
                 // Magictouch plugin compatibility
                 global $magictouch_account_id;
@@ -137,7 +137,7 @@ function HookAnnotateViewRenderinnerresourcepreview()
                 if($annotate_pdf_output)
                     {
                     ?>
-                    &nbsp;&nbsp;<a style="display:inline;float:right;" class="nowrap" href="<?php echo $baseurl_short?>plugins/annotate/pages/annotate_pdf_config.php?ref=<?php echo $ref?>&ext=<?php echo $resource["preview_extension"]?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>" onClick="return CentralSpaceLoad(this);"><?php echo LINK_CARET . $lang["pdfwithnotes"]?></a>
+                    &nbsp;&nbsp;<a style="display:inline;float:right;" class="nowrap" href="<?php echo generateURL($baseurl_short . 'plugins/annotate/pages/annotate_pdf_config.php', $urlparams)?>" onClick="return CentralSpaceLoad(this);"><?php echo LINK_CARET . $lang["pdfwithnotes"]?></a>
                     <?php
                     }
                     ?>
