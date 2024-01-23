@@ -5305,8 +5305,8 @@ function get_size_info(array $size, ?array $originalSize = null): string
             }
         }
 
-    $output = sprintf('
-        <p>%s &times; %s %s',
+    $output = sprintf(
+        '<p>%s &times; %s %s',
         htmlspecialchars($newWidth),
         htmlspecialchars($newHeight),
         htmlspecialchars($lang['pixels']),
