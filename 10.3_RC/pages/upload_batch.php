@@ -1116,7 +1116,7 @@ jQuery(document).ready(function () {
                     styledalert("<?php echo escape($lang["error"])?>", "<?php echo escape($lang["requiredfield_resource_type"])?>", 450);
                     return false;
                     }
-                <?php
+<?php
                 }
             ?>
 
@@ -1189,7 +1189,7 @@ jQuery(document).ready(function () {
             ?>
             rs_k: '<?php echo htmlspecialchars($k) ?>',
             rs_collection_add: '<?php echo (int)$collection_add ?>',
-            <?php
+<?php
             }?>
         });
         
@@ -1648,7 +1648,7 @@ function postUploadActions()
                 allowcollectionreload = false;
                 CollectionDivLoad("<?php echo $baseurl . '/pages/collections.php?nowarn=true&nc=' . time() ?>");
                 }
-            <?php
+<?php
             }
         else
             {?>
