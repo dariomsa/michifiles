@@ -767,7 +767,8 @@ else
 			http_response_code(200); # Send OK
 			}
         header("Access-Control-Allow-Origin: *");
-		if(isset($response_image) && file_exists($response_image))
+        header("Access-Control-Allow-Headers: Accept");
+        if(isset($response_image) && file_exists($response_image))
             {
             // Send the image
             $file_size   = filesize_unlimited($response_image);
