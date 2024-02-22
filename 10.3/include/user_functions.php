@@ -710,6 +710,12 @@ function save_user($ref)
             return $lang["useralreadyexists"]; # An account with that e-mail or username already exists, changes not saved
             }
 
+       // Enabling a disabled account but at the user limit?
+        if (user_limit_reached() && $current_user_data["approved"]!=1 && $approved==1)
+            {
+            return $lang["userlimitreached"]; // Return error message 
+            }
+
         // Password checks:
         if($suggest != '' || ($password == '' && $emailresetlink != ''))
             {
@@ -959,6 +965,9 @@ function auto_create_user_account($hash="")
     global $user_email, $baseurl, $lang, $user_account_auto_creation_usergroup, $registration_group_select, 
            $auto_approve_accounts, $auto_approve_domains, $customContents, $language, $home_dash, $applicationname;
 
+    // Feature disabled if user limit reached.
+    if (user_limit_reached()) {return false;}
+
     # Work out which user group to set. Allow a hook to change this, if necessary.
     $altgroup=hook("auto_approve_account_switch_group");
     if ($altgroup!==false)
@@ -1185,6 +1194,8 @@ function email_user_request()
     $email              = strip_tags(getval('email', ''));
     $userrequestcomment = strip_tags(getval('userrequestcomment', ''));
 
+    $user_limit_reached=user_limit_reached();
+
     $user_registration_opt_in_message = "";
     if($user_registration_opt_in && getval("login_opt_in", "") == "yes")
         {
@@ -1196,7 +1207,7 @@ function email_user_request()
     $message->set_subject($applicationname . ": ");
     $message->append_subject("lang_requestuserlogin");
     $message->append_subject(" - " . $name);
-    $message->set_text($account_email_exists_notify ? "lang_userrequestnotificationemailprotection1":  "lang_userrequestnotification1");
+    $message->set_text($account_email_exists_notify && !$user_limit_reached ? "lang_userrequestnotificationemailprotection1":  "lang_userrequestnotification1");
     $message->append_text("<br/><br/>");
     $message->append_text("lang_name");
     $message->append_text(": " . $name . "<br/><br/>");
@@ -1211,7 +1222,15 @@ function email_user_request()
         {
         $message->append_text($customContents . "<br/><br/>");
         }
-    $message->append_text($account_email_exists_notify ? "lang_userrequestnotificationemailprotection2": "lang_userrequestnotification2");
+    // User limit reached? Add a message explaining.
+    if ($user_limit_reached)
+        {
+        $message->append_text("lang_userlimitreached");
+        }
+    else    
+        {
+        $message->append_text($account_email_exists_notify ? "lang_userrequestnotificationemailprotection2": "lang_userrequestnotification2");
+        }
     $message->user_preference = ["user_pref_user_management_notifications" => ["requiredvalue" => true, "default" => $user_pref_user_management_notifications]];
     $message->url = $baseurl . "/pages/team/team_user.php";
     send_user_notification($approval_notify_users,$message);
@@ -1226,20 +1245,41 @@ function email_user_request()
     }
 
 /**
+* Check to see if the user limit has been reached.
+* * 
+* @return boolean  - true if user limit has been reached or exceeded
+*/
+
+function user_limit_reached()
+    {
+    global $user_limit;
+    if (isset($user_limit))
+        {
+        $c=ps_value("SELECT COUNT(*) value FROM user WHERE approved = 1",[],0);
+        if ($c>=$user_limit) {return true;}
+        }
+    return false;
+    }
+
+/**
 * Create a new user
 * * 
 * @param string $newuser  - username to create
 * @param integer $usergroup  - optional usergroup to assign
 * 
-* @return boolean|integer  - id of new user or false if user already exists
+* @return boolean|integer  - id of new user or false if user already exists, or -2 if user limit reached
 */
 function new_user($newuser, $usergroup = 0)
     {
-    global $lang,$home_dash;
+    global $lang,$home_dash,$user_limit;
+
     # Username already exists?
     $c=ps_value("SELECT COUNT(*) value FROM user WHERE username = ?",["s",$newuser],0);
     if ($c>0) {return false;}
     
+    # User limit reached?
+    if (user_limit_reached()) {return -2;}
+
     $cols = array("username");
     $sqlparams = ["s",$newuser];
     $cols[] = 'password';
