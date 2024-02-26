@@ -1122,20 +1122,23 @@ else
 			}
 	}		
 
-	# Display thumbnails for standard display
-	if ($count_result>0) 
-	{
-		# Loop through resources for thumbnails for standard display
-		for ($n=0;$n<count($result) && $n<$count_result && $n<$max_collection_thumbs;$n++)					
-			{
-			$ref=$result[$n]["ref"];
-			$resource_view_title = i18n_get_translated($result[$n]["field" . $view_title_field]);
-			?>
-	<?php 
-	if (!hook("resourceview")) 
-		{ ?>
-		<!--Resource Panel-->
-		<div class="CollectionPanelShell ResourceType<?php echo $result[$n]['resource_type']; ?>" id="ResourceShell<?php echo urlencode($ref) ?>"
+    # Display thumbnails for standard display
+    if ($count_result>0) 
+    {
+        # Loop through resources for thumbnails for standard display
+        for ($n=0;$n<count($result) && $n<$count_result && $n<$max_collection_thumbs;$n++)                  
+            {
+            if (!isset($result[$n])) {
+                    continue;
+                }
+            $ref=$result[$n]["ref"];
+            $resource_view_title = i18n_get_translated($result[$n]["field" . $view_title_field]);
+            ?>
+    <?php 
+    if (!hook("resourceview")) 
+        { ?>
+        <!--Resource Panel-->
+        <div class="CollectionPanelShell ResourceType<?php echo $result[$n]['resource_type']; ?>" id="ResourceShell<?php echo urlencode($ref) ?>"
         <?php if (in_array($ref,$addarray)) { ?>style="display:none;"<?php } # Hide new items by default then animate open ?>>
 
 		<?php if (!hook("rendercollectionthumb")){?>
