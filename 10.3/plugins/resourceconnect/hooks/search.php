@@ -164,7 +164,7 @@ function HookResourceConnectSearchThumblistextras()
 
 function HookResourceConnectSearchProcess_search_results($result,$search)
     {
-    global $baseurl,$k;
+    global $baseurl,$k, $resourceconnect_affiliates;
     if (substr($search,0,11)!="!collection") {return false;} # Not a collection. Exit.
     $collection=substr($search,11);
     $affiliate_resources=ps_query("select ref,collection,date_added,title,thumb,large_thumb,xl_thumb,url,source_ref from resourceconnect_collection_resources where collection=?",array("i",$collection));
@@ -173,8 +173,22 @@ function HookResourceConnectSearchProcess_search_results($result,$search)
     # Append the affiliate resources to the collection display
     foreach ($affiliate_resources as $resource)
         {
+        $source_affiliate = [];
         $urlparams = array("k"=>$k,"col"=>$collection,"url"=>$resource["url"]);
         $url = generateURL("{$baseurl}/plugins/resourceconnect/pages/view.php",$urlparams);
+        if (trim($resource['large_thumb']) !== '' && strpos($resource['large_thumb'], 'download.php') === false){
+            foreach ($resourceconnect_affiliates as $rc_affiliate){
+                if (strpos($resource['large_thumb'], $rc_affiliate['baseurl']) !== false){
+                    $source_affiliate = $rc_affiliate;
+                    break;
+                }
+            }
+            if (count($source_affiliate) > 0){
+                $resource['large_thumb'] = generateURL($source_affiliate['baseurl'] . '/pages/download.php', ['ref' => $resource['source_ref'], 'size' => 'thm', 'k' => substr(md5($source_affiliate['accesskey'] . $resource['source_ref']), 0, 10)]);
+                $resource['thumb'] = generateURL($source_affiliate['baseurl'] . '/pages/download.php', ['ref' => $resource['source_ref'], 'size' => 'col', 'k' => substr(md5($source_affiliate['accesskey'] . $resource['source_ref']), 0, 10)]);
+                $resource['xl_thumb'] = generateURL($source_affiliate['baseurl'] . '/pages/download.php', ['ref' => $resource['source_ref'], 'size' => 'pre', 'k' => substr(md5($source_affiliate['accesskey'] . $resource['source_ref']), 0, 10)]);
+            }
+        }
         $result["data"][]=array
             (
             "ref"=>-87412,

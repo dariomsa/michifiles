@@ -183,9 +183,9 @@ else
         # Add image 
         if ($result["has_image"]==1)
             { 
-            $add_url.="&thumb=" . urlencode(get_resource_path($ref,false,"col",false,"jpg"));
-            $add_url.="&large_thumb=" . urlencode(get_resource_path($ref,false,"thm",false,"jpg"));
-            $add_url.="&xl_thumb=" . urlencode(get_resource_path($ref,false,"pre",false,"jpg"));
+            $add_url.="&thumb=" . urlencode(generateURL($baseurl . '/pages/download.php', ['ref' => $ref, 'size' => 'col', 'k' => substr(md5($access_key . $ref), 0, 10)]));
+            $add_url.="&large_thumb=" . urlencode(generateURL($baseurl . '/pages/download.php', ['ref' => $ref, 'size' => 'thm', 'k' => substr(md5($access_key . $ref), 0, 10)]));
+            $add_url.="&xl_thumb=" . urlencode(generateURL($baseurl . '/pages/download.php', ['ref' => $ref, 'size' => 'pre', 'k' => substr(md5($access_key . $ref), 0, 10)]));
             }   
         else
             {
@@ -203,7 +203,7 @@ else
         <?php if ($result["has_image"]==1) {
             
             $img_url = get_resource_path($ref,false,"thm",false,$result["preview_extension"],-1,1,false,$result["file_modified"]);
-            
+            $display_url = generateURL($baseurl . '/pages/download.php', ['ref' => $ref, 'size' => 'thm', 'k' => $k]);
             
             $size = getimagesize($img_url);
             $ratio = (isset($size[0]))? $size[0] / $size[1] : 1; 
@@ -230,7 +230,7 @@ else
             $width = $defaultwidth;
             $margin = "auto";
             }
-            echo "<img height=\"$height\" width=\"$width\" margin=\"$margin\" src=\"$img_url\" style=\"margin-top:$margin;\" />";
+            echo "<img height=\"$height\" width=\"$width\" margin=\"$margin\" src=\"$display_url\" style=\"margin-top:$margin;\" />";
             # add icon overlay if remote image
             hook("aftersearchimg","",array($result, $img_url));
             ?>
