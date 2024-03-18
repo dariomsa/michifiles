@@ -355,7 +355,7 @@ $uploadparams= array(
 
 $searchparams = get_search_params();
 
-global $merge_filename_with_title, $merge_filename_with_title_default;
+global $merge_filename_with_title, $merge_filename_with_title_default, $filename_field;
 if($merge_filename_with_title)
     {
     $merge_filename_with_title_option = urlencode(getval('merge_filename_with_title_option', $merge_filename_with_title_default));
@@ -665,6 +665,11 @@ if ($processupload)
             elseif(!$upload_then_edit)
                 {
                 $ref=copy_resource(0-$userref,-1,$lang["createdfromwebuploader"]); # Copy from user template
+                # Store original filename early in the process so that macros can benefit
+                if (isset($filename_field))
+                    {
+                    update_field($ref,$filename_field,$origuploadedfilename);
+                    }
                 }
 
             // copy_resource() returns false if user doesn't have a resource template
