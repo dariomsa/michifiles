@@ -665,16 +665,14 @@ if($k !='' && !$internal_share_access && $custom_stylesheet_external_share) {
                     if (!hook("renderinnerresourcepreview"))
                         {
                         # Establish whether it's ok to use original as the preview instead of the "pre" size
-                        $sizeforpreview= ($video_preview_original) ? "" : "pre";
-                        # Now pass the original file extension when necessary instead of arbitrarily passing the ffmpeg preview extension
-                        $videoextension = ($video_preview_original) ? $resource["file_extension"] : $ffmpeg_preview_extension; 
+                        $sizeforpreview= ($video_preview_original) ? "" : "pre"; 
                         # Try to find a preview file.
                         $video_preview_file = get_resource_path(
                             $ref,
                             true,
                             $sizeforpreview,
                             false,
-                            ((1 == $video_preview_hls_support || 2 == $video_preview_hls_support) && !($ffmpeg_preview_gif && $resource["file_extension"] == 'gif')) ? 'm3u8' : $videoextension
+                            ((1 == $video_preview_hls_support || 2 == $video_preview_hls_support) && !($ffmpeg_preview_gif && $resource["file_extension"] == 'gif')) ? 'm3u8' : $ffmpeg_preview_extension
                         );
 
                         # Default use_watermark if required by related_resources
