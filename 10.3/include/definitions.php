@@ -862,3 +862,11 @@ const DEFAULT_DOWNLOAD_FILENAME_FORMAT = 'RS%resource_%filename%size.%extension'
 const SEVERITY_CRITICAL = 0;
 const SEVERITY_WARNING = 1;
 const SEVERITY_NOTICE = 2;
+
+const API_ISSUE_VALID_DESTINATIONS = [
+    "linkrui" => [
+        "name" => "LinkrUI",
+        "url" => "https://resourcespace.linkrui.com/saml",
+        "stateparam" => "state",
+    ],
+];
