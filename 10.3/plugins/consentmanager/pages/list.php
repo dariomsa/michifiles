@@ -122,20 +122,20 @@ for ($n=$offset;(($n<count($consents)) && ($n<($offset+$per_page)));$n++)
 
 
 
-		<div class="Question">
-			<label for="find"><?php echo $lang["consentsearch"]?><br/></label>
-			<div class="tickset">
-			 <div class="Inline">			
-			<input type=text placeholder="<?php echo $lang['searchbytext']?>" name="findtext" id="findtext" value="<?php echo $findtext?>" maxlength="100" class="shrtwidth" />
-			
-			<input type="button" value="<?php echo $lang['clearbutton']?>" onClick="$('findtext').value='';CentralSpacePost(document.getElementById('consentlist'));return false;" />
-			<input name="Submit" type="submit" value="&nbsp;&nbsp;<?php echo $lang["searchbutton"]?>&nbsp;&nbsp;" />
-			 
-			</div>
-			</div>
-			<div class="clearerleft"> 
-			</div>
-		</div>
+        <div class="Question">
+            <label for="find"><?php echo $lang["consentsearch"]?><br/></label>
+            <div class="tickset">
+             <div class="Inline">           
+            <input type=text placeholder="<?php echo escape($lang['searchbytext']); ?>" name="findtext" id="findtext" value="<?php echo escape($findtext); ?>" maxlength="100" class="shrtwidth" />
+            
+            <input type="button" value="<?php echo escape($lang['clearbutton']); ?>" onClick="$('findtext').value='';CentralSpacePost(document.getElementById('consentlist'));return false;" />
+            <input name="Submit" type="submit" value="&nbsp;&nbsp;<?php echo escape($lang["searchbutton"]); ?>&nbsp;&nbsp;" />
+             
+            </div>
+            </div>
+            <div class="clearerleft"> 
+            </div>
+        </div>
 
 </form>
 <?php
