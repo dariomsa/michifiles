@@ -1209,10 +1209,12 @@ function do_search(
     if(strlen(trim((string) $usersearchfilter)) > 0
         && !is_numeric($usersearchfilter)
         && (
-            (trim($userdata[0]["search_filter_override"]) != "" && $userdata[0]["search_filter_o_id"] != -1)
+            (isset($userdata[0]["search_filter_override"]) && trim($userdata[0]["search_filter_override"]) != ""
+            && isset($userdata[0]["search_filter_o_id"]) && $userdata[0]["search_filter_o_id"] != -1)
             ||
-            (trim($userdata[0]["search_filter"]) != "" && $userdata[0]["search_filter_id"] != -1)
-            )
+            (isset($userdata[0]["search_filter"]) && trim($userdata[0]["search_filter"]) != ""
+            && isset($userdata[0]["search_filter_id"]) && $userdata[0]["search_filter_id"] != -1)
+            )        
         )
         {
         // Migrate old style filter unless previously failed attempt
