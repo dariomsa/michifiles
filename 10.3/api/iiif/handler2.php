@@ -647,8 +647,8 @@ else
 									$o++;
                                     }
                                 $n++;
-								}
-							elseif(trim($iiif_data_row["value"]) != "")
+                                }
+                            elseif(trim((string) $iiif_data_row["value"]) != "")
                                 {
                                 $response["metadata"][$n] = array();
                                 $response["metadata"][$n]["label"] = $iiif_data_row["title"];
