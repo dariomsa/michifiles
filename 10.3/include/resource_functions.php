@@ -48,11 +48,6 @@ function get_resource_path(
     $migrating_scrambled, $scramble_key_old, $filestore_evenspread, $filestore_migrate,
     $baseurl, $k, $get_resource_path_extra_download_query_string_params;
 
-    if(isset($resource_path_pull_cache[$ref]) && strtolower((string)$extension) == 'jpg')
-        {
-        $ref = $resource_path_pull_cache[$ref]["ref"];
-        }
-
     $size = safe_file_name((string) $size);
     $extension = safe_file_name((string) $extension);
 

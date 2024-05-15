@@ -188,11 +188,34 @@ if(isset($system_read_only) && $system_read_only)
     $mysql_log_transactions=false;
     $enable_collection_copy = false;
     }
-if((!isset($suppress_headers) || !$suppress_headers) && $xframe_options!="")
-    {
-    // Add X-Frame-Options to HTTP header, so that page cannot be shown in an iframe unless specifically set in config.
-    header('X-Frame-Options: ' . $xframe_options);
+
+if (!isset($suppress_headers) || !$suppress_headers) {
+    $default_csp_fa = "'self'";
+    if ($csp_frame_ancestors === [] && isset($xframe_options) && $xframe_options !== '') {
+        // Set CSP frame-ancestors based on legacy $xframe_options config
+        switch ($xframe_options) {
+            case "DENY":
+                $frame_ancestors = ["'none'"];
+                break;
+            case (bool) strpos($xframe_options,"ALLOW-FROM"):
+                $frame_ancestors = explode(" ",substr($xframe_options,11));
+                break;
+            default:
+                $frame_ancestors = [$default_csp_fa];
+                break;
+        }
+    } else {
+        $frame_ancestors = $csp_frame_ancestors;
     }
+
+    if(in_array("'none'", $frame_ancestors)) {
+        $frame_ancestors = ["'none'"];
+    } else {
+        array_unshift($frame_ancestors, $default_csp_fa);
+    }
+
+    header('Content-Security-Policy: frame-ancestors ' . implode(" " , array_unique(trim_array($frame_ancestors))));
+}
 
 if($system_down_redirect && getval('show', '') === '') {
 	redirect($baseurl . '/pages/system_down.php?show=true');
