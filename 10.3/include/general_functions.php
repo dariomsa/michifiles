@@ -5386,3 +5386,12 @@ function get_size_info(array $size, ?array $originalSize = null): string
 
     return $output;
     }
+
+/**
+ * Input validation helper function for sorting (ASC/DESC).
+ * @param mixed $val User input value to be validated
+ */
+function validate_sort_value($val): bool
+{
+    return is_string($val) && in_array(mb_strtolower($val), ['asc', 'desc']);
+}
