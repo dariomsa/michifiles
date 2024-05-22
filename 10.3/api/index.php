@@ -70,8 +70,9 @@ if($function != "login")
             exit("Invalid signature");
             }
     
-        # Log user in (if permitted)        
-        $validuser = setup_user(get_user(get_user_by_username($user)));
+        # Log user in (if permitted)
+        $userref = get_user_by_username($user);
+        $validuser = setup_user(get_user($userref));
         if(!$validuser)
             {
             ajax_send_response(
@@ -83,6 +84,12 @@ if($function != "login")
                 ]]
             );
             }
+            ps_query("UPDATE user 
+                         SET last_active = NOW(),
+                             last_ip = ?,
+                             last_browser = ?
+                       WHERE ref = ?",
+                       ["s",get_ip(),"s","API","i",$userref], false, -1, true, 0);
         }
     }
 
