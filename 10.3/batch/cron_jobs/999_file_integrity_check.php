@@ -58,7 +58,7 @@ foreach($resources as $resource)
                 {
                 // Need full file checksums to check integrity
                 $checksum = get_checksum($path);
-                if(trim($resource['file_checksum']) != '' && $checksum == $resource['file_checksum'])
+                if(trim($resource['file_checksum'] ?? "") != '' && $checksum == $resource['file_checksum'])
                     {
                     ps_query("UPDATE resource SET integrity_fail = 0, last_verified = now() WHERE ref = ?", array("i", $resource['ref']));
                     }
