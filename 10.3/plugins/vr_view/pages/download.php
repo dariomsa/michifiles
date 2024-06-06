@@ -1,6 +1,6 @@
 <?php
 
-include '../../../include/boot.php';
+include '../../../include/db.php';
 
 $url = getval('url', '');
 if (trim($url) !== '') {
