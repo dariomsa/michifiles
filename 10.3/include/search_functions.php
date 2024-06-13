@@ -1266,11 +1266,22 @@ function search_special($search,$sql_join,$fetchrows,$sql_prefix,$sql_suffix,$or
             # Find duplicates of a given resource
             if (is_int_loose($ref))
                 {
-                $sql->sql="SELECT DISTINCT r.hit_count score, $select FROM resource r " . $sql_join->sql . "
-                    WHERE " . $sql_filter->sql . " AND file_checksum <> '' AND file_checksum IS NOT NULL 
-                                      AND file_checksum = (SELECT file_checksum FROM resource WHERE ref=$ref AND (file_checksum <> '' AND file_checksum IS NOT NULL) ) 
-                    ORDER BY file_checksum, ref";   
-                $sql->parameters = array_merge($sql_join->parameters,$sql_filter->parameters);
+                $sql->sql=sprintf(
+                    "SELECT DISTINCT r.hit_count score, %s
+                        FROM resource r %s
+                        WHERE %s
+                            AND file_checksum <> ''
+                            AND file_checksum IS NOT NULL
+                            AND file_checksum = (
+                                SELECT file_checksum
+                                    FROM resource
+                                    WHERE ref= ?
+                                        AND (file_checksum <> '' AND file_checksum IS NOT NULL)
+                                )
+                        GROUP BY r.ref
+                        ORDER BY file_checksum, ref",
+                    $select,$sql_join->sql,$sql_filter->sql);
+                $sql->parameters = array_merge($sql_join->parameters,$sql_filter->parameters,["i",$ref]);
                 }
             else
                 {
@@ -1532,7 +1543,16 @@ function search_special($search,$sql_join,$fetchrows,$sql_prefix,$sql_suffix,$or
     elseif (substr($search,0,7)=="!unused")
         {
         // Search for resources not used in any collections
-        $sql->sql = $sql_prefix . "SELECT DISTINCT $select FROM resource r " . $sql_join->sql . " WHERE r.ref>0 AND r.ref NOT IN (SELECT c.resource FROM collection_resource c) AND " . $sql_filter->sql . $sql_suffix;
+        $sql->sql = $sql_prefix;
+        $sql->sql .= sprintf(
+            "SELECT DISTINCT %s
+                FROM resource r %s
+                WHERE r.ref>0
+                    AND r.ref NOT IN (SELECT c.resource FROM collection_resource c)
+                    AND %s
+                GROUP BY r.ref",
+            $select,$sql_join->sql,$sql_filter->sql);
+        $sql->sql .= $sql_suffix;
         $sql->parameters = array_merge($sql_join->parameters,$sql_filter->parameters);
         }
     elseif (substr($search,0,5)=="!list")
@@ -1562,7 +1582,15 @@ function search_special($search,$sql_join,$fetchrows,$sql_prefix,$sql_suffix,$or
             $listsql->parameters = ps_param_fill($resources,"i");
             }
 
-        $sql->sql = $sql_prefix . "SELECT DISTINCT r.hit_count score, $select FROM resource r " . $sql_join->sql . $listsql->sql  . " AND " . $sql_filter->sql . " ORDER BY " . $order_by . $sql_suffix;
+        $sql->sql = $sql_prefix;
+        $sql->sql .= sprintf(
+            "SELECT DISTINCT r.hit_count score, %s
+                FROM resource r %s%s
+                    AND %s
+                GROUP BY r.ref
+                ORDER BY %s",
+                $select,$sql_join->sql,$listsql->sql,$sql_filter->sql,$order_by);
+        $sql->sql .= $sql_suffix;
         $sql->parameters = array_merge($sql_join->parameters,$listsql->parameters,$sql_filter->parameters);
         }
     elseif (substr($search,0,8)=="!hasdata") 
