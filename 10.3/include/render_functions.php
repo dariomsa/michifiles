@@ -4061,6 +4061,13 @@ function check_display_condition($n, array $field, array $fields, $render_js, in
         function checkDisplayCondition<?php echo $field["ref"];?>()
             {
             console.debug('(<?php echo str_replace(dirname(__DIR__), '', __FILE__) . ':' . __LINE__?>) checkDisplayCondition<?php echo $field["ref"]; ?>()');
+
+            if (jQuery('#field_<?php echo (int) $field["ref"]; ?>_displayed').length === 0)
+                {
+                console.debug('Skipping - field <?php echo (int) $field["ref"]; ?> not found on form');
+                return;
+                }
+
             // Get current display state for governed field ("block" or "none")
             field<?php echo $field['ref']; ?>status    = jQuery('#question_<?php echo $n . ($GLOBALS["multiple"] === true ? '' : '_' . $resource_ref); ?>').css('display');
             newfield<?php echo $field['ref']; ?>status = 'none';
