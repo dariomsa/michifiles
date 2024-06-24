@@ -957,6 +957,8 @@ $lang["stat-usersession"]="User session";
 $lang["stat-addedsmartcollection"]="Added smart collection";
 $lang["stat-removedresourcefromcollection"]="Removed resource from collection";
 $lang["stat-keywordusage-noresultsfound"]="Keyword usage - no results found";
+$lang["stat-downloadedkb"]="Downloaded file data (KB)";
+
 
 # Access
 $lang["access0"]="Open";
