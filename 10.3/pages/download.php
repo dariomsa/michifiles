@@ -460,8 +460,6 @@ else
     }
 
 
-daily_stat('Resource download', $ref);
-
 header('Accept-Ranges: bytes');
 
 set_time_limit(0);
