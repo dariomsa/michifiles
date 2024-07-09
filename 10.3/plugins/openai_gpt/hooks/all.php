@@ -3,7 +3,6 @@ include_once __DIR__ . '/../include/openai_gpt_functions.php';
 
 global $valid_ai_field_types;
 
-
 /**
  * Add to array of field column data on metadata field editing page
  *
