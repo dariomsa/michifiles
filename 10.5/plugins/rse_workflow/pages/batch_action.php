@@ -59,7 +59,9 @@ $archive = getval("archive", "");
 $access = getval("access", null);
 $per_page = getval("per_page", null, true);
 $offset = getval("offset", 0, true);
-$sort = getval("sort", "desc");
+
+$sort = "DESC";
+
 $recent_search_daylimit = getval("recent_search_daylimit", "");
 $go = getval("go", "");
 
