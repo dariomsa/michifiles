@@ -971,13 +971,13 @@ function email_reset_link($email,$newuser=false)
         if($blockreset)
             {
             $message = $templatevars['welcome'] . "\n\n" . $lang["passwordresetexternalauth"] . "\n\n" . $baseurl . "\n\n" . $lang["username"] . ": " . $templatevars['username'];
-            $result=send_mail($email,$applicationname . ": " . $lang["newlogindetails"],$message);
+            $result=send_mail($email,$applicationname . ": " . $lang["youraccountdetails"],$message);
             if ($result!==true) {return $result;} // Pass any e-mail errors back
             }
         else
             {
             $message = $templatevars['welcome'] . $lang["newlogindetails"] . "\n\n" . $baseurl . "\n\n" . $lang["username"] . ": " . $templatevars['username'] . "\n\n" .  $lang["passwordnewemail"] . "\n" . $templatevars['url'];
-            $result=send_mail($email,$applicationname . ": " . $lang["newlogindetails"],$message,"","","passwordnewemailhtml",$templatevars);
+            $result=send_mail($email,$applicationname . ": " . $lang["youraccountdetails"],$message,"","","passwordnewemailhtml",$templatevars);
             if ($result!==true) {return $result;} // Pass any e-mail errors back
             }
         }
@@ -988,7 +988,7 @@ function email_reset_link($email,$newuser=false)
         if($blockreset)
             {
             $message .=  "\n\n" . $lang["passwordresetnotpossible"] . "\n\n" . $lang["passwordresetexternalauth"] . "\n\n" . $baseurl;
-            $result=send_mail($email,$applicationname . ": " . $lang["newlogindetails"],$message);
+            $result=send_mail($email,$applicationname . ": " . $lang["youraccountdetails"],$message);
             if ($result!==true) {return $result;} // Pass any e-mail errors back
             }
         else
