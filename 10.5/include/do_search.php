@@ -407,8 +407,8 @@ function do_search(
 
     hook('zero_search_results');
 
-    // No suggestions for field-specific searching or if just one keyword 
-    if (strpos($search,":")!==false || count($keywords) === 1)
+    // No suggestions for field-specific searching
+    if (strpos($search,":")!==false)
         {
         return "";
         }
@@ -430,7 +430,7 @@ function do_search(
             $lsql->sql .= " OR ";
             }
         $lsql->sql .= "keyword = ?";
-        $lsql->parameters = array_merge($lsql->parameters, ["i", $keywords[$n]]);
+        array_push($lsql->parameters,"i",$keywords[$n]);
         }
 
     if ($omitmatch)
