@@ -656,7 +656,13 @@ function ProcessFolder($folder)
                                                         ]))
                                                     {
                                                     $existing_value  = get_data_by_field($r,$field);
-                                                    $values_to_add[$field] = $existing_value . ($staticsync_extension_mapping_append_separator ?? " ") . $value;
+                                                    if ((string) $existing_value != "") {
+                                                    $values_to_add[$field] = $existing_value .
+                                                        ($staticsync_extension_mapping_append_separator ?? " ") .
+                                                        $value;
+                                                    } else {
+                                                        $values_to_add[$field] = $value;
+                                                    }
                                                     }
                                                 }
                                             }
