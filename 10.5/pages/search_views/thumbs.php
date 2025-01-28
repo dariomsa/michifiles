@@ -179,33 +179,24 @@ if (!hook("renderresultthumb"))
             echo $workflow_html;
             }
 
-        if(count(canSeeAnnotationsFields()) > 0)
-            {
-            $annotations_count = getResourceAnnotationsCount($ref);
-            $message           = '';
+            if (isset($show_annotation_count) && $show_annotation_count) {
+                $annotations_count = $result[$n]["annotation_count"] ?? getResourceAnnotationsCount($ref);
+                $message           = '';
 
-            if(1 < $annotations_count)
-                {
-                $message = $annotations_count . ' ' . mb_strtolower($lang['annotate_annotations_label']);
+                if (1 < $annotations_count) {
+                    $message = $annotations_count . ' ' . mb_strtolower($lang['annotate_annotations_label']);
+                } elseif (1 == $annotations_count) {
+                    $message = $annotations_count . ' ' . mb_strtolower($lang['annotate_annotation_label']);
                 }
-            elseif(1 == $annotations_count)
-                {
-                $message = $annotations_count . ' ' . mb_strtolower($lang['annotate_annotation_label']);
-                }
-            ?>
-            <div class="ResourcePanelInfo AnnotationInfo">
-            <?php
-            if(0 < $annotations_count)
-                {
                 ?>
-                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                <span><?php echo $message; ?></span>
+                <div class="ResourcePanelInfo AnnotationInfo">
+                    <?php if (0 < $annotations_count) { ?>
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                        <span><?php echo $message; ?></span>
+                    <?php } ?>
+                    &nbsp;
+                </div>
                 <?php
-                }
-                ?>
-            &nbsp;
-            </div>
-            <?php
             }
 
         $df_alt=hook("displayfieldsalt");
