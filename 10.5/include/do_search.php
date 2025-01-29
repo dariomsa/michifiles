@@ -137,12 +137,15 @@ function do_search(
             }
         }
 
-    if($search_params!="")
-        {
-        $keywords=split_keywords($search_params,false,false,false,false,true);
+    if ($search_params != "") {
+        if (
+            (preg_match('/^[^\\s]+$/',$search) && ($wildcard_always_applied || strpos($search,"*") !== false))
+        ) {
+            $keywords = [$search_params];
+        } else {
+            $keywords = split_keywords($search_params, false, false, false, false, true);
         }
-    else
-        {
+    } else {
         $keywords = array();
         }
 
@@ -428,8 +431,8 @@ function do_search(
 
     hook('zero_search_results');
 
-    // No suggestions for field-specific searching
-    if (strpos($search,":")!==false)
+    // No suggestions for field-specific searching or if just one keyword 
+    if (strpos($search,":")!==false || count($keywords) === 1)
         {
         return "";
         }
@@ -451,7 +454,7 @@ function do_search(
             $lsql->sql .= " OR ";
             }
         $lsql->sql .= "keyword = ?";
-        array_push($lsql->parameters,"i",$keywords[$n]);
+        $lsql->parameters = array_merge($lsql->parameters, ["i", $keywords[$n]]);
         }
 
     if ($omitmatch)
