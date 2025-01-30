@@ -45,22 +45,22 @@ if(0 < $node && get_node($node, $found_node_by_ref))
 
 // Fuzzy search by node name:
 // Translate (i18l) all options and return those that have a match for what client code searched (fuzzy searching still applies)
-if($name != "")
-    {
-    foreach(get_nodes($resource_type_field, null, true, null, $rows, $name) as $node)
-        {
-        if($rows == $current_node_pointer)
-            {
+if ($name != "") {
+    // Set $keywords_remove_diacritics so as to only add versions with diacritics to return array if none are in the submitted string
+    $keywords_remove_diacritics = mb_strlen($name) === strlen($name);
+    $name = normalize_keyword($name);
+
+    foreach (get_nodes($resource_type_field, null, true, null, $rows, $name) as $node) {
+        if ($rows == $current_node_pointer) {
             break;
-            }
+        }
 
         $i18l_name = i18n_get_translated($node['name']);
-
+        $compare = normalize_keyword($i18l_name);
         // Skip any translated (i18l) names that don't contain what client code searched for
-        if(false === mb_strpos(mb_strtolower($i18l_name), mb_strtolower($name)))
-            {
+        if (false === mb_strpos(mb_strtolower($compare), mb_strtolower($name))) {
             continue;
-            }
+        }
 
         $node['name'] = $i18l_name;
 
@@ -68,8 +68,8 @@ if($name != "")
 
         // Increment only when valid nodes have been added to the result set
         $current_node_pointer++;
-        }
     }
+}
 
 // Search did not return any results back. This is still considered a successful request!
 if(($node > 0 || $name != "") && !isset($return['data']) && 0 === count($return))
