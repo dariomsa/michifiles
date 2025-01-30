@@ -6,7 +6,8 @@ include "../../include/dash_functions.php";
 
 
 if(checkperm('h') && checkperm('hdt_ug')) {
-    $user_groups = array_merge([ucfirst($lang['all_users'])], get_usergroups(false, '', true));
+    $user_groups = array(ucfirst($lang['all_users']));
+    $user_groups += get_usergroups(false, '', true);
 } else {
     global $usergroup;
     $user_groups = array_filter(get_usergroups(false, '', true), fn($k) => $usergroup == $k, ARRAY_FILTER_USE_KEY);
