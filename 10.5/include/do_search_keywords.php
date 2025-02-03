@@ -633,16 +633,22 @@
                                     elseif ($wildcards)
                                         {
                                         $union = new PreparedStatementQuery();
-                                        if (substr($keyword,0,1) == "*" || preg_match('/\W/', str_replace("*" , "", $keyword)) !=0) {
-                                            // Full text searching can't match anywhere except the start. It will also ignore non-word characters. Use a LIKE search
+                                        if (substr($keyword, 0, 1) == "*" || preg_match('/\W/', str_replace("*" , "", $keyword)) !=0 || strlen(trim($keyword, '*')) < 3) {
+                                            // Full text searching can't match anywhere except the start. It will also ignore non-word characters.
+                                            // Normally the full text index will not index words less than 3 characters.
+                                            // Use a LIKE search.
                                             $keyword = str_replace("*", "%", $keyword);
                                             $union->sql = "
-                                                SELECT resource, [bit_or_condition] hit_count AS score
-                                                  FROM resource_node rn[union_index]
-                                                 WHERE rn[union_index].node IN
-                                                       (SELECT ref FROM `node` WHERE name LIKE ? "
-                                                       . $union_restriction_clause->sql . ")
-                                              GROUP BY resource ";
+                                            SELECT resource, [bit_or_condition] hit_count AS score
+                                                FROM resource_node rn[union_index]
+                                                WHERE rn[union_index].node IN
+                                                    (SELECT n.ref
+                                                        FROM keyword k
+                                                        JOIN node_keyword nk ON nk.keyword=k.ref
+                                                        JOIN `node` n ON n.ref=nk.node
+                                                        WHERE k.keyword LIKE ? "
+                                                . $union_restriction_clause->sql . ")
+                                            GROUP BY resource ";
                                         } else {
                                             // Use fulltext search
                                             $union->sql = "
