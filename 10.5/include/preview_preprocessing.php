@@ -242,15 +242,14 @@ if (($extension=="cr2" || $extension=="nef" || $extension=="dng" || $extension==
                         ];
                         $wait = run_command($command, false, $cmdparams);
                     }
-                $newfile = $target;$keep_for_hpr=true;
                 }
-            elseif(file_exists($target))
-                {
+                $newfile = $target;
+                $keep_for_hpr = true;
+            } elseif (file_exists($target)) {
                 unlink($target);
-                }   
             }
-    }
-}   
+        }
+    } 
 
 /* ---------------------------------------- 
         Try Apple iWork Formats 
