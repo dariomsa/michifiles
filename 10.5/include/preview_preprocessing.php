@@ -189,49 +189,35 @@ if (($extension=="cr2" || $extension=="nef" || $extension=="dng" || $extension==
             ($extension == "dng" && $dng_thumb_extract) || 
             ($extension == "rw2" && $rw2_thumb_extract) || 
             ($extension == "raf" && $raf_thumb_extract) ||
-            ($extension == 'arw' && $arw_thumb_extract) 
-        ) && 
+            ($extension == "arw" && $arw_thumb_extract)
+        ) &&
         $exiftool_fullpath != false
         ) {
-            // previews are stored in a couple places, and some nef files have large previews in -otherimage
-            if ($extension=="rw2"){$bin_tag=" -jpgfromraw ";}
-            if ($extension=="nef"){$bin_tag=" -otherimage ";}
-            if ($extension=="cr2"||$extension=="dng"||$extension=="raf" || 'arw' == $extension)
-                {
-                $bin_tag = " -previewimage ";
-                }
-
-            // Attempt extraction. Replaced ">" with -w since this has been seen to fail on some Windows servers
-            $cmd = $exiftool_fullpath . ' -b ' . $bin_tag . ' ' . escapeshellarg($file) . " ";
-            $cmd .= ($GLOBALS["config_windows"]?WINDOWS_SHELL_REDIRECT:LINUX_SHELL_REDIRECT) . " %d%f.jpg";
-            $wait=run_command($cmd);
-            $extractedpreview=preg_replace('"\.' . pathinfo($file, PATHINFO_EXTENSION) . '$"', '.jpg', $file);
-            if($target!=$extractedpreview && file_exists($extractedpreview))
-                {
-                rename($extractedpreview, $target);
-                }
-            
         
+            // Run command to output all previews in order of binary data size
+            $cmd_preview_list = $exiftool_fullpath . " %%FILE%% -preview:all";
+            $output_preview = run_command($cmd_preview_list, false, ['%%FILE%%' => new CommandPlaceholderArg($file, 'is_valid_rs_path')]);
 
-            // check for nef -otherimage failure
-            if ($extension=="nef"&&!filesize_unlimited($target)>0)
-                {
-                if(file_exists($target))
-                    {
-                    unlink($target);
-                    }
+            if (strpos($output_preview, "Jpg From Raw") === 0) {
+                $bin_tag = "-jpgfromraw";
+            } elseif (strpos($output_preview, "Other Image") === 0) {
+                $bin_tag = "-otherimage";
+            } elseif (strpos($output_preview, "Preview Image") === 0) {
+                $bin_tag = "-previewimage";
+            } else {
+                $bin_tag = "-thumbnailimage";
+            }
 
-                $bin_tag=" -previewimage ";
-                //2nd attempt
-                $cmd = $exiftool_fullpath . ' -b ' . $bin_tag . ' ' . escapeshellarg($file) . " ";
-                $cmd .= ($GLOBALS["config_windows"]?WINDOWS_SHELL_REDIRECT:LINUX_SHELL_REDIRECT) . " %d%f.jpg";
-                $wait=run_command($cmd);
-                $extractedpreview=preg_replace('"\.' . pathinfo($file, PATHINFO_EXTENSION) . '$"', '.jpg', $file);
-                if($target!=$extractedpreview && file_exists($extractedpreview))
-                    {
-                    rename($extractedpreview, $target);
-                    }
-                }
+            // Attempt extraction
+            $cmd = $exiftool_fullpath . " -b %%BIN_TAG%% %%FILE%% -w %d%f.jpg";
+            $wait = run_command($cmd, false, ['%%FILE%%'    => new CommandPlaceholderArg($file, 'is_valid_rs_path'),
+                                              '%%BIN_TAG%%' => new CommandPlaceholderArg($bin_tag, [CommandPlaceholderArg::class, 'alwaysValid']),                                 
+                                             ]);
+            $extractedpreview = preg_replace('"\.' . pathinfo($file, PATHINFO_EXTENSION) . '$"', '.jpg', $file);
+            
+            if ($target != $extractedpreview && file_exists($extractedpreview)) {
+                rename($extractedpreview, $target);
+            }
                 
             // NOTE: in case of failures, other suboptimal possibilities 
             // may be explored in the future such as -thumbnailimage and -jpgfromraw, like this:
@@ -244,17 +230,17 @@ if (($extension=="cr2" || $extension=="nef" || $extension=="dng" || $extension==
                 //$wait=run_command($exiftool_fullpath.' -b '.$bin_tag.' '.$file.' > '.$target);
                 //}
             
-            if (filesize_unlimited($target)>0)
-                {
-                $orientation=get_image_orientation($file);
-                if ($orientation!=0)
-                    {
+            if (filesize_unlimited($target) > 0) {
+                $orientation = get_image_orientation($file);
+                if ($orientation != 0) {
                     $mogrify_fullpath = get_utility_path("im-mogrify");
-                    if ($mogrify_fullpath!=false)
-                        {
-                        $command = $mogrify_fullpath . ' -rotate +' . $orientation .' '. $target;
-                        $wait = run_command($command);
-                        }
+                    if ($mogrify_fullpath != false) {
+                        $command = $mogrify_fullpath . ' -rotate +%%ORIENTATION%% %%TARGET%%';
+                        $cmdparams = [
+                            "%%ORIENTATION%%" => new CommandPlaceholderArg($orientation, 'is_positive_int_loose'),
+                            "%%TARGET%%"      => new CommandPlaceholderArg($target, 'is_valid_rs_path')
+                        ];
+                        $wait = run_command($command, false, $cmdparams);
                     }
                 $newfile = $target;$keep_for_hpr=true;
                 }
@@ -263,7 +249,8 @@ if (($extension=="cr2" || $extension=="nef" || $extension=="dng" || $extension==
                 unlink($target);
                 }   
             }
-    }   
+    }
+}   
 
 /* ---------------------------------------- 
         Try Apple iWork Formats 
