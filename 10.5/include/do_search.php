@@ -224,8 +224,22 @@ function do_search(
         // Get custom access
         $select .= ",rca.access group_access,rca2.access user_access ";
         if (!checkperm("g") && !$internal_share_access) {
+
+            // TEMP FIX FOR v10.5 TO BE REMOVED WITH UPDATES TO search_special()
+            $is_contributions_search_with_open_access_for_contributor = false;
+            if (substr($search, 0, 14) == "!contributions")
+                {
+                $cuser = explode(" ", $search);
+                $cuser = str_replace("!contributions", "", $cuser[0]);
+                global $open_access_for_contributor;
+                if ($open_access_for_contributor && $userref == $cuser)
+                    {
+                    $is_contributions_search_with_open_access_for_contributor = true;
+                    }
+                }
+
             // Restrict all resources by default
-            if (is_int_loose($userderestrictfilter) && $userderestrictfilter > 0) {
+            if (is_int_loose($userderestrictfilter) && $userderestrictfilter > 0 && !$is_contributions_search_with_open_access_for_contributor) {
                 // Add exemption for custom access
                 $derestrict_filter_sql = get_filter_sql($userderestrictfilter);
                 if (is_a($derestrict_filter_sql,"PreparedStatementQuery")) {
