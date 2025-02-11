@@ -9535,17 +9535,18 @@ function related_resource_pull(array $resource)
 /**
  * Get the largest available preview URL for the given resource and the given array of sizes
  *
- * @param array     $resource   Array of resource data from get_resource_data() or search results
- * @param int       $access     Resource access
- * @param array     $sizes      Array of size IDs to look through, in order of size. If not provied will use all sizes
- * @param bool      $watermark  Look for watermarked versions?
- * @param int       $page       Page to look for
+ * @param array     $resource               Array of resource data from get_resource_data() or search results
+ * @param int       $access                 Resource access
+ * @param array     $sizes                  Array of size IDs to look through, in order of size. If not provied will use all sizes
+ * @param bool      $watermark              Look for watermarked versions?
+ * @param int       $page                   Page to look for
+ * @param bool      $try_pulled_resource    Should we try to use an image from a pulled resource if the current resource doesn't have a usable preview
  *
  * @return array | bool         array, or false if no image is found
  *
  */
-function get_resource_preview(array $resource,array $sizes = [], int $access = -1, bool $watermark = false, int $page = 1)
-    {
+function get_resource_preview(array $resource, array $sizes = [], int $access = -1, bool $watermark = false, int $page = 1, bool $try_pulled_resource = true)
+{
     global $userref, $open_access_for_contributor;
     if(empty($sizes))
         {
@@ -9559,19 +9560,7 @@ function get_resource_preview(array $resource,array $sizes = [], int $access = -
         $preview["url"] = $resource['thm_url'];
         $preview["height"] = $resource["thumb_height"];
         $preview["width"] = $resource["thumb_width"];
-        }
-    else
-        {
-        if((int)$resource['has_image'] !== RESOURCE_PREVIEWS_NONE)
-            {
-            // If configured, try and use a preview from a related resource
-            $pullresource = related_resource_pull($resource);
-            if($pullresource !== false)
-                {
-                $resource = $pullresource;
-                }
-            }
-
+    } else {
         if($access == -1)
             {
             $access = get_resource_access($resource);
@@ -9626,9 +9615,17 @@ function get_resource_preview(array $resource,array $sizes = [], int $access = -
                 break;
                 }
             }
+        if (!$validimage && (int)$resource['has_image'] !== RESOURCE_PREVIEWS_NONE && $try_pulled_resource) {
+            // If configured, try and use a preview from a related resource
+            $pullresource = related_resource_pull($resource);
+            if ($pullresource !== false) {
+                $resource = $pullresource;
+            }
+            $preview = get_resource_preview($resource, $sizes, $access, $watermark, $page, false);
+            $validimage = $preview !== false; 
         }
-    if(!$validimage)
-        {
+    }
+    if (!$validimage) {
         return false;
         }
     return $preview;
