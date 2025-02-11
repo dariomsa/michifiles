@@ -2592,10 +2592,9 @@ function add_saved_search_items($collection, $search = "", $restypes = "", $arch
     global $collection_share_warning, $collection_allow_not_approved_share, $userref, $collection_block_restypes, $search_all_workflow_states;
     
     # Adds resources from a search to the collection.
-    if($search_all_workflow_states && 0 != $archivesearch)
-        {
+    if ($search_all_workflow_states && trim($archivesearch) !== "" && $archivesearch != 0) {
         $search_all_workflow_states = false;
-        }
+    }
    
     $results=do_search($search, $restypes, $order_by, $archivesearch,[0,-1],$sort,false,DEPRECATED_STARSEARCH,false,false,$daylimit,false,true,false,$editable_only,false,$res_access);
 
