@@ -8214,10 +8214,11 @@ function image_size_restricted_access($id)
 * Returns a list of fields with refs matching the supplied field refs.
 *
 * @param array $field_refs Array of field refs
+* @param bool  order_by_passed_refs Returns the array of fields in the order requested in $field_refs
 *
 * @return array
 */
-function get_fields($field_refs)
+function get_fields($field_refs, bool $order_by_passed_refs = false)
     {
     if(!is_array($field_refs))
         {
@@ -8237,14 +8238,25 @@ function get_fields($field_refs)
       ORDER BY rtf.order_by", ps_param_fill($field_refs,"i"),"schema");
 
     $return = array();
-    foreach($fields as $field)
-        {
-        if(metadata_field_view_access($field['ref']))
-            {
-            $return[] = $field;
+    
+    if ($order_by_passed_refs) {
+ 
+        $fields_array = array_column($fields, null, 'ref');
+ 
+        foreach ($field_refs as $field_ref) {
+            if (array_key_exists($field_ref, $fields_array) && metadata_field_view_access($field_ref)) {
+                $return[] = $fields_array[$field_ref];
             }
         }
-
+ 
+    } else {
+    foreach ($fields as $field) {
+        if (metadata_field_view_access($field['ref'])) {
+            $return[] = $field;
+        }
+    }
+    }
+ 
     return $return;
     }
 

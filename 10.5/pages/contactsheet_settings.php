@@ -6,7 +6,7 @@ include_once '../include/pdf_functions.php';
 $collection         = getval('ref', '', true);
 $collectiondata     = get_collection($collection);
 $ajax               = ('true' == getval('ajax', '') ? true : false);
-$sheetstyle         = getval('sheetstyle', 'thumbnails');
+$sheetstyle         = getval('sheetstyle', 'list');
 $field_value_limit  = getval('field_value_limit', 0);
 $filename_uid       = generateUserFilenameUID($userref);
 $error              = getval("error","");
@@ -57,7 +57,7 @@ if(!$contactsheet_use_field_templates)
     );
     }
 
-foreach(get_fields($sheetstyle_fields) as $field_data)
+foreach(get_fields($sheetstyle_fields, true) as $field_data)
     {
     $available_contact_sheet_fields[] = $field_data;
     }
@@ -190,7 +190,9 @@ if(!collection_readable($collection))
                                 {
                                 var contact_sheet_field_obj = response_obj[x];
 
-                                contact_sheet_fields_selector.append('<option value="' + contact_sheet_field_obj.ref + '">' + contact_sheet_field_obj.title + '</option>');
+                                contact_sheet_fields_selector.append('<option value="' + Number(contact_sheet_field_obj.ref) + '" ' 
+                                                                            + (Number(contact_sheet_field_obj.ref) == 0 ? 'selected>' : '>')
+                                                                            + contact_sheet_field_obj.title + '</option>');
                                 }
 
                             return true;
@@ -378,7 +380,9 @@ if($contactsheet_use_field_templates)
                         $selected = 'selected';
                         }
                     ?>
-                    <option value="<?php echo $contact_sheet_field['ref']; ?>"<?php echo $selected; ?>><?php echo i18n_get_translated($contact_sheet_field['title']); ?></option>
+                    <option value="<?php echo (int) $contact_sheet_field['ref']; ?>"<?php echo $selected; ?>>
+                        <?php echo i18n_get_translated($contact_sheet_field['title']); ?>
+                    </option>
                     <?php
                     }
                 ?>
@@ -387,11 +391,12 @@ if($contactsheet_use_field_templates)
             }
             ?>
         <div class="clearerleft"></div>
+        <a href="#" onclick="jQuery().rsContactSheet('preview','<?php echo $collection; ?>','<?php echo $filename_uid; ?>'); return false;"><i aria-hidden="true" class="fa fa-fw fa-arrows-rotate"></i> <?php echo escape($lang["contact_sheet_update_preview"]); ?></a>
     </div>
 
     <div class="Question">
         <label><?php echo escape($lang["size"]); ?></label>
-        <select class="shrtwidth" name="size" id="size" onChange="jQuery().rsContactSheet('revert','<?php echo $collection; ?>','<?php echo $filename_uid; ?>');"><?php echo $papersize_select; ?></select>
+        <select class="shrtwidth" name="size" id="size" style="width: 300px;" onchange="jQuery().rsContactSheet('revert','<?php echo $collection; ?>','<?php echo $filename_uid; ?>');"><?php echo $papersize_select; ?></select>
         <div class="clearerleft"> </div>
     </div>
 
@@ -497,7 +502,7 @@ if($contact_sheet_previews == true)
     {
     ?>
     <div style="float:left;padding:0px -50px 15px 0;height:<?php echo escape($height) ?>px;margin-top:-15px;margin-right:-50px">
-        <img alt="" id="previewimage" name="previewimage" src=""/>
+        <img alt="" id="contact-sheet--previewimage" name="previewimage" src=""/>
     </div>
     <?php
     }
