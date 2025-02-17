@@ -9627,14 +9627,14 @@ function get_resource_preview(array $resource, array $sizes = [], int $access = 
                 break;
                 }
             }
-        if (!$validimage && (int)$resource['has_image'] !== RESOURCE_PREVIEWS_NONE && $try_pulled_resource) {
+        if (!$validimage && (int)$resource['has_image'] === RESOURCE_PREVIEWS_NONE && $try_pulled_resource) {
             // If configured, try and use a preview from a related resource
             $pullresource = related_resource_pull($resource);
             if ($pullresource !== false) {
                 $resource = $pullresource;
+                $preview = get_resource_preview($resource, $sizes, get_resource_access($resource), $watermark, $page, false);
+                $validimage = $preview !== false; 
             }
-            $preview = get_resource_preview($resource, $sizes, $access, $watermark, $page, false);
-            $validimage = $preview !== false; 
         }
     }
     if (!$validimage) {
