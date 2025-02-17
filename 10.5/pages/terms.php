@@ -85,6 +85,12 @@ if($terms_download == false && $terms_upload==false && getval("noredir","") == "
     redirect($url);
     }
 
+if ($useracceptedterms) {
+    $decline_link = "window.history.go(-1)";
+} else {
+    $decline_link = "window.location='" . generateURL($baseurl . '/login.php', ['logout' => true, 'nc' => time()]) . "'";
+}
+
 include "../include/header.php";
 ?>
 <div class="BasicsBox"> 
@@ -122,7 +128,7 @@ include "../include/header.php";
                type="submit"
                value="&nbsp;&nbsp;<?php echo escape($lang["proceed"]); ?>&nbsp;&nbsp;"
                <?php hook('terms_save_input_attributes', '', array($ref, $url)); ?>/>
-               <input type="button" name="decline" onclick="window.location='<?php echo generateURL($baseurl . '/login.php', ['logout' => true, 'nc' => time()])?>';"
+               <input type="button" name="decline" onclick="<?php echo $decline_link; ?>"
                value="<?php echo escape($lang["idecline"]); ?>"/>
     </div>
     </form>
