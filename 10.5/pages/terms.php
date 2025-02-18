@@ -85,7 +85,8 @@ if($terms_download == false && $terms_upload==false && getval("noredir","") == "
     redirect($url);
     }
 
-if ($useracceptedterms) {
+global $useracceptedterms;
+if ($useracceptedterms || trim($k) !== '') {
     $decline_link = "window.history.go(-1)";
 } else {
     $decline_link = "window.location='" . generateURL($baseurl . '/login.php', ['logout' => true, 'nc' => time()]) . "'";
