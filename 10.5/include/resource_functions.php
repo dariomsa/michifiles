@@ -9765,3 +9765,14 @@ function get_resources_to_validate(int $days = 0): array
                     ORDER BY integrity_fail DESC, last_verified ASC",
                     $params);
 }
+
+/**
+ *  Check if a resource is a template resource, dictated by the $fstemplate_alt_threshold config
+ * 
+ *  @param int $ref resource ref to check
+ */
+function resource_is_template(int $ref): bool
+{
+    global $fstemplate_alt_threshold;
+    return $ref < $fstemplate_alt_threshold && $fstemplate_alt_threshold > 0;
+}
