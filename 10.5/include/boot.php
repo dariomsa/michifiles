@@ -436,10 +436,13 @@ if($CSRF_enabled && PHP_SAPI != 'cli' && !$suppress_headers && !in_array($pagena
     debug("CSRF: \$CSRF_source_origin = {$CSRF_source_origin}");
     debug("CSRF: \$CSRF_target_origin = {$CSRF_target_origin}");
 
+    // Whitelist match?
+    $cors_is_origin_allowed=cors_is_origin_allowed($CSRF_source_origin, $CORS_whitelist);
+
     // Verifying the Two Origins Match
     if(
         !hook('modified_cors_process')
-        && $CSRF_source_origin !== $CSRF_target_origin && !in_array($CSRF_source_origin, $CORS_whitelist)
+        && $CSRF_source_origin !== $CSRF_target_origin && !$cors_is_origin_allowed
     )
         {
         debug("CSRF: Cross-origin request detected and not white listed!");
@@ -449,9 +452,8 @@ if($CSRF_enabled && PHP_SAPI != 'cli' && !$suppress_headers && !in_array($pagena
         exit();
         }
 
-    // CORS
-    if(in_array($CSRF_source_origin, $CORS_whitelist))
-        {
+    // Add CORS headers.
+    if ($cors_is_origin_allowed) {
         debug("CORS: Origin: {$CSRF_source_origin}");
         debug("CORS: Access-Control-Allow-Origin: {$CSRF_source_origin}");
 
@@ -459,6 +461,12 @@ if($CSRF_enabled && PHP_SAPI != 'cli' && !$suppress_headers && !in_array($pagena
         header("Access-Control-Allow-Origin: {$CSRF_source_origin}");
         header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
         header("Access-Control-Allow-Headers: Authorization, Content-Type");
+
+        // Handle preflight requests
+        if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+            http_response_code(200);
+            exit();
+        }
         }
     header('Vary: Origin');
     }
