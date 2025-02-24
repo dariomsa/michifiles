@@ -256,6 +256,7 @@ if ($allow_fc_reorder)
 
         jQuery('.BasicsBox.FeaturedSimpleLinks').sortable({
             items: '.SortableItem',
+            distance: 20,
             update: function(event, ui)
                 {
                 let html_ids_new_order = jQuery('.BasicsBox.FeaturedSimpleLinks').sortable('toArray');

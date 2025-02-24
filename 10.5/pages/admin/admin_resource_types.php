@@ -234,6 +234,7 @@ function enableRestypesort(){
                 axis: "y",
                 cursor: 'move',
                 opacity: 0.6, 
+                distance: 20,
                 stop: function(event, ui) {
                     //alert("HERE");
                     <?php
