@@ -1658,6 +1658,11 @@ function create_previews_using_im(
                                     // Reset icc flag as still required when using original as source
                                     $icc_transform_complete = false;
                                     }
+                                else
+                                    {
+                                    $using_original = false;
+                                    $icc_transform_complete = true;
+                                    }
                                 debug("Using source file : '" . $pre_source  . "'");
                                 break;
                                 }
