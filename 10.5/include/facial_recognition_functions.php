@@ -1,4 +1,6 @@
 <?php
+use Montala\ResourceSpace\CommandPlaceholderArg;
+
 /**
 * Initialize facial recognition functionality.
 * 
@@ -165,10 +167,20 @@ function faceRecognizerPredict($model_file_path, $test_image_path)
         }
 
     $faceRecognizer_path = __DIR__ . '/../lib/facial_recognition/faceRecognizer.py';
-    $model_file_path     = escapeshellarg($model_file_path);
-    $test_image_path     = escapeshellarg($test_image_path);
-
-    $prediction = run_command("{$python_fullpath} {$faceRecognizer_path} {$model_file_path} {$test_image_path}");
+    $cmdparams = [
+        '[MODEL_PATH]' => new CommandPlaceholderArg(
+            $model_file_path,
+            fn($p) => is_valid_rs_path($p,
+                [
+                $GLOBALS['storagedir'],
+                $GLOBALS['facial_recognition_face_recognizer_models_location'],
+            ])
+        ),
+        '[IMAGE_PATH]' => new CommandPlaceholderArg($test_image_path, 'is_valid_rs_path'),
+    ];
+    
+    $command = "{$python_fullpath} {$faceRecognizer_path} [MODEL_PATH] [IMAGE_PATH]";
+    $prediction = run_command($command, false, $cmdparams, 300);
     $prediction = json_decode($prediction);
 
     if(null === $prediction || 2 > count($prediction))
