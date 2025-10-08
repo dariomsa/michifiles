@@ -473,7 +473,7 @@ enum ProcessFileUploadErrorCondition
  * @param SplFileInfo|array{name: string, full_path: string, type: string, tmp_name: string, error: int, size: int} $source
  * @param array{
  *      allow_extensions?: list<string>,
- *      file_move?: 'move_uploaded_file'|'rename'|'copy',
+ *      file_move?: 'move_uploaded_file'|'rename'|'copy'|'dry_run',
  *      mime_file_based_detection?: bool,
  * } $processor Processors which can override different parts of the main logic (e.g. allow specific extensions)
  *
@@ -593,6 +593,8 @@ function process_file_upload(SplFileInfo|array $source, SplFileInfo $destination
         debug("Destination path '{$dest_path}' not allowed!");
         trigger_error('Destination path not allowed');
         exit();
+    } elseif ($file_move_processor === 'dry_run') {
+        return ['success' => true];
     } elseif (array_intersect(['move_uploaded_file', 'rename', 'copy'], [$file_move_processor]) === []) {
         trigger_error('Invalid upload (file move) processor');
         exit();
