@@ -316,8 +316,8 @@ debug(sprintf('$fields = %s', json_encode(array_column(is_array($fields) ? $fiel
 # If no fields were found advise of configuration issue and exit.
 if (!$fields_all || !$fields)
     {
-    error_alert($lang["error_no_metadata"], false);
-    exit();
+    //error_alert($lang["error_no_metadata"], false);
+    //exit();
     }
 
 # Load edit access level (checking edit permissions - e0,e-1 etc. and also the group 'edit filter')
