@@ -652,11 +652,12 @@ $terms_upload = false;
 $terms_login = false;
 
 // Controls how the collection bar should be displayed ("hide" is better if collections are not going to be heavily used).
+// Will be overriden by local value stored in cookie, or via user preferences/group config override being set
 // Can be:
 //     show - full display, the default option
 //     actions - minimized bar showing selector for collections and actions
 //     hide - show collection button only
-$thumbs_default = "show";
+$thumbs_default = "hide";
 
 // Automatically show thumbs when selecting a collection from My Requests (only if thumbs_default is show)
 $autoshow_thumbs = false;
