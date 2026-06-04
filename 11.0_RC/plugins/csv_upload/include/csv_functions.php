@@ -541,7 +541,7 @@ function csv_upload_process($filename, &$meta, $resource_types, &$messages, $csv
                     update_geolocation_fields($resource_id, [$lat, $lng]);
                 }
 
-                if ($csv_set_options["update_existing"]) {
+                if ($csv_set_options["csv_mode"] == "update_existing") {
                     $logtext = " - " . ($processcsv ? "Updating " : "Update ") . "location to $lat, $lng";
                 } else {
                     $logtext = " - Add location $lat, $lng ";
