@@ -667,7 +667,6 @@ div.tile-select {
     flex-grow: 0;
     background: var(--colour-surface-card-content-background);
     border-radius: var(--space-4) var(--space-4);
-    outline: var(--space-2) solid var(--colour-neutral-700);
 }
 #previewdashtile .DoubleWidthDashTile{
     border-radius: var(--space-4) var(--space-4);
