@@ -513,7 +513,7 @@ if (!$validpage) {
             <?php
         }
 
-        if (!$tile_nostyle) {
+        if (!$tile_nostyle || in_array($tile_type, ['srch', 'fcthm'])) {
             if (isset($tile_style)) {
                 tileStyle($tile_type, $tile_style, $tile_style_colour);
             } else {
