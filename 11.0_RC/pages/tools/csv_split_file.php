@@ -42,9 +42,9 @@ while (!feof($handle)) {
         fwrite($newfile, $header_line); // add csv header line
 
     for ($i = 1; $i <= $number_lines; $i++) { //add number of lines defined by $number_lines
-        $line = fgetcsv($handle, escape: '');
+        $line = fgetcsv($handle);
         if (is_array($line)) {
-            fputcsv($newfile, $line, escape: '');
+            fputcsv($newfile, $line);
         } else {
             echo $line;
             break;
