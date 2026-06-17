@@ -4681,7 +4681,6 @@ header.LoginHeader {
 #header-container .actions {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     gap: var(--space-12);
     grid-area: actions;
 }
@@ -4841,6 +4840,10 @@ header.LoginHeader {
     font-style: normal;
     font-weight: 500;
     line-height: 100%; /* 18px */
+}
+
+#header-container .actions:not(:has(a.UploadButton)) {
+    justify-content: center;
 }
 
 /* ===== Responsive layouts ===== */
@@ -5089,6 +5092,10 @@ header.LoginHeader {
         align-items: center;
         gap: var(--space-12);
         white-space: nowrap;
+    }
+
+    #header-container:not(:has(.header-search-field)) .primary-navigation {
+        margin-left: auto;
     }
 
     #header-container a.UploadButton {
