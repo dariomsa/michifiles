@@ -1648,8 +1648,8 @@ input.contactadminbutton  {
 
 p.tile_corner_box {
     position: absolute;
-    top: 130px;
-    left: 10px;
+    top: 140px;
+    left: 8px;
 
     display: inline-flex;
     height: 26px;
@@ -1717,7 +1717,7 @@ p.tile_corner_box {
     border-radius: var(--space-8);
 }
 .DoubleWidthDashTile p.tile_corner_box {
-    top: 330px
+    top: 337px
 }
 .DoubleWidthDashTile .tile-special-icon i {
     font-size: 64px;
