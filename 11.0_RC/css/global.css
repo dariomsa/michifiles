@@ -1665,7 +1665,7 @@ p.tile_corner_box {
     line-height: 150%;
 
     border-radius: var(--space-4);
-    background: var(--colour-transparency-black-50);
+    background: var(--colour-transparency-black-60);
 }
 .DraggableItem, .SortableItem {
     cursor:pointer;
