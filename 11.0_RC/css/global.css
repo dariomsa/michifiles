@@ -1770,11 +1770,13 @@ p.tile_corner_box {
 }
 .DashTileActions {
     display: flex;
+    position: relative;
     padding-top: var(--space-12);
     align-items: flex-end;
     gap: var(--space-8);
     flex: 1 0 0;
     border-radius: var(--space-4);
+    width: 100%;
 }
 
 .DashTileActions .tool {
@@ -1787,6 +1789,11 @@ p.tile_corner_box {
 
     border-radius: var(--space-4);
     background: var(--colour-surface-200);
+}
+.DashTileActions .tile_corner_box {
+    left: initial;
+    top: initial;
+    right: 0px;
 }
 
 @media (max-width:1366px) { /* Currently adjusted to accommodate the search bar, should be 1366px */
