@@ -1784,7 +1784,7 @@ function dash_tile_featured_collection_get_top_resources()
                 JOIN resource r ON r.ref = cr.resource
                 JOIN collection c ON c.ref = cr.collection
             WHERE c.type = ? 
-            ORDER BY r.hit_count DESC
+            ORDER BY r.hit_count DESC LIMIT 500
         ", ['i', COLLECTION_TYPE_FEATURED], "schema");
     $resource_data = get_resource_data_batch($resources);
     $count = 0;
