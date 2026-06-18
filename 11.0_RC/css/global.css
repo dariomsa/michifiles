@@ -1182,7 +1182,7 @@ a.HomePanel {text-decoration:none; cursor:pointer;}
 }
 .TabSelected {margin-right: 5px;}
 .TabSelected a { margin: 0;}
-#RecordDownloadTabButtons {width: 445px;}
+#RecordDownloadTabButtons {width: 100%;}
 .RecordPanelLarge #RecordDownloadTabButtons {width: 100%;}
 .NonMetadataProperties { padding-bottom: 8px; }
 div#Metadata > div.Title { padding-top: 0.3em; }
