@@ -1968,7 +1968,6 @@ function tltype_srch_generate_js_for_background_and_count(array $tile, string $t
                 const TILE_WIDTH = <?php echo $tile_width; ?>;
                 const TILE_HEIGHT = <?php echo $tile_height; ?>;
                 var preview_resources;
-                var placeholder = response.images.pop();
 
                 if (TILE_STYLE === 'thmbs') {
                     let promoted_image = <?php echo (int)$promoted_image; ?>;
