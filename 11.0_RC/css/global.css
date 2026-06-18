@@ -6223,6 +6223,10 @@ body:has(.collection-bar-holder.state-thumbs) #UICenter {
     .CommentFormBody {
         width: 100%;
     }
+
+    .BasicsBox.SearchSticky {
+        position: static;
+    }
 }
 
 @media(max-width: 1420px) {
