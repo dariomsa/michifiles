@@ -105,7 +105,7 @@ function HookAction_datesCronCron()
                     $restrict_interval = date_diff($action_date_current, $restrict_date_target);
                     $days_before_restrict = (int) $restrict_interval->format('%R%a');
                     # Check due number of days within range for notification
-                    if ($action_dates_workflow_actions && $days_before_restrict <= $action_dates_email_admin_days) {
+                    if ($days_before_restrict <= $action_dates_email_admin_days) {
                         $email_restrict_refs[] = $ref;
                         $email_restrict_days[] = $days_before_restrict;
                     }
