@@ -320,7 +320,7 @@ if (!hook("previewimage")) {
 <tr>
 <td valign="middle">
     <?php 
-    if ($resource['file_extension']!="jpg" && $previouspage!=-1 &&resource_download_allowed($ref,"scr",$resource["resource_type"])) {
+    if ($resource['file_extension']!="jpg" && $previouspage!=-1 && (resource_download_allowed($ref,"scr",$resource["resource_type"]) || $use_watermark)) {
         $urlparams["page"] = $previouspage;
     ?>
     <a onClick="return CentralSpaceLoad(this);" 
