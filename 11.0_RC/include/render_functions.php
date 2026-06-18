@@ -5150,6 +5150,10 @@ function render_featured_collection(array $ctx, array $fc)
 
                     jQuery(`a.FeaturedSimpleTile:not(${fctilename})`).css('pointer-events', 'initial')
                 }
+            ).mousedown(
+                function(e) {
+                    e.stopPropagation();
+                }
             );
         })
     </script>  
