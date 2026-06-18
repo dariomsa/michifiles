@@ -422,8 +422,6 @@ $keyboard_navigation_prev_page = 188;
 $keyboard_navigation_next_page = 190;
 # view all results, '/'
 $keyboard_navigation_all_results = 191;
-# toggle thumbnails in collections frame, 't'
-$keyboard_navigation_toggle_thumbnails = 84;
 # view all resources from current collection, 'v'
 $keyboard_navigation_view_all = 86;
 # zoom to/from preview, default 'z'
@@ -903,8 +901,6 @@ const API_ISSUE_VALID_DESTINATIONS = [
 
 // Stream wrappers not needed by ResourceSpace, to unregister during boot.php to improve security.
 const UNREGISTER_WRAPPERS = ['ftp','ftps', 'phar'];
-
-const COLLECTION_FRAME_HEIGHT = 153;
 
 // Default lifetime in days of a temporary download file created by the job queue. After this time it will be deleted by another job
 const DOWNLOAD_FILE_LIFETIME = 14;

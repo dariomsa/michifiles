@@ -751,7 +751,6 @@ if($collectionsearch && collection_writeable(substr($search, 11)))
                     resource_id = resource_id.replace('ResourceShell', '');
                     var collection_id = query_strings.search.substring(11);
 
-                    jQuery('#trash_bin').hide();
                     AddResourceToCollection(event, ui, resource_id, '', collection_id);
                     CentralSpaceLoad(window.location.href, true);
                 }
@@ -768,7 +767,6 @@ if(!$collectionsearch)
     ?>
     <!-- Search item results in centralspace have a class of "ResourcePanel" -->
     <!-- These items should be draggable to add them to the collection in the collection bar if results are NOT from collection search -->
-    <!-- They should also be draggable to the trash_bin to removing them from a collection if results ARE from collection search -->
     <script>    
     // The below numbers are hardcoded mid points for thumbs and xlthumbs
     var thumb_vertical_mid = <?php if($display=='xlthumbs'){?>197<?php } else {?>123<?php }?>;
@@ -878,7 +876,6 @@ if ($collectionsearch && $display!="list") {
                         }
                     var collection_id = query_strings.search.substring(11);
 
-                    jQuery('#trash_bin').show();
                     }
                 },
 
@@ -915,20 +912,11 @@ if ($collectionsearch && $display!="list") {
                    return false;
                     <?php
                     }?>
-                    
-                if(is_special_search('!collection', 11))
-                    {
-                    jQuery('#trash_bin').hide();
-                    }
                 },
 
             stop: function(event, ui)
                 {
                 InfoBoxEnabled=true;
-                if(is_special_search('!collection', 11))
-                    {
-                    jQuery('#trash_bin').hide();
-                    }
                 }
         });
         jQuery('.ResourcePanelShell').disableSelection();

@@ -667,10 +667,6 @@ if (isset($high_contrast_mode) && $high_contrast_mode) { ?>
     select, .sp-replacer {
         background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMjIiIGhlaWdodD0iMTMiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDIyIDEzIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAgLTQpIiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxyZWN0IHk9IjIiIHdpZHRoPSIyMiIgaGVpZ2h0PSIxMSIvPjxwb2x5bGluZSB0cmFuc2Zvcm09InJvdGF0ZSg0NSA2LjAzNiA1LjAzNikiIHBvaW50cz0iOS41OTYgMS40NzUgOS41OTYgOC41OTYgMi40NzUgOC41OTYiIHN0cm9rZT0iIzAwMDAwNCIgc3Ryb2tlLXdpZHRoPSIyIi8+PC9nPjwvc3ZnPgo=);
     }
-    .CollectBack {
-        background: black;
-        color: white;
-    }
     .prevLink, .nextLink, .prevPageLink, .nextPageLink {
         padding: 2px 5px;
         border-radius: 3px;

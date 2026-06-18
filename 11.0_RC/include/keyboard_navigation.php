@@ -62,8 +62,6 @@ jQuery(document).ready(function() {
                      break;
             case <?php echo $keyboard_navigation_all_results; ?>: if (jQuery('.upLink').length > 0) jQuery('.upLink').click();
                      break;
-            case <?php echo $keyboard_navigation_toggle_thumbnails; ?>: if (jQuery('#toggleThumbsLink').length > 0) jQuery('#toggleThumbsLink').click();
-                     break;
             case <?php echo $keyboard_navigation_zoom; ?>: if (jQuery('.enterLink').length > 0) window.location=jQuery('.enterLink').attr("href");
                      break;
             case <?php echo $keyboard_navigation_close; ?>: ModalClose();

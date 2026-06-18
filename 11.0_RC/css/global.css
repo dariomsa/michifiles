@@ -524,8 +524,6 @@ button, input[type=submit], input[type=button], .RecordPanel .RecordDownloadSpac
     padding-bottom: var(--space-16);
     align-items: flex-start;
     align-self: stretch;
-
-    /*font-family: Space Grotesk;*/
     font-size: 18px;
     font-style: normal;
     font-weight: 700;
@@ -597,7 +595,6 @@ button, input[type=submit], input[type=button], .RecordPanel .RecordDownloadSpac
 .tile-summary > p {
     color: var(--colour-link-primary-default);
     text-align: center;
-    /*font-family: Space Grotesk;*/
     font-size: 32px;
     font-style: normal;
     font-weight: 500;
@@ -782,7 +779,6 @@ select::-ms-expand
 .TeamCentreAlertIcon { position: relative; top: 3px;}
 
 .HorizontalNav li a {display: inline-block;zoom: 1;}
-h2#CollectionsPanelHeader {display:none;}
 
 .ProfileImage { vertical-align:top; width:36px; height:36px; border-radius:36px}
 
@@ -844,27 +840,9 @@ img[src$=".svg"]
 .HorizontalNav a:hover, .HorizontalNav a:active {text-decoration:underline;}
 .HorizontalWhiteNav li:first-child {border-left:none;}
 .HorizontalNav li:first-child {border-left:none;}
-#CollectionMinRightNav li:first-child {border-left:none;}
 
 /*Collection layout*/
-#CollectionMenu{padding: 10px; text-align:left; position: fixed; margin-left: 15px;}
-#CollectionMenuExp{width: 216px;position: absolute;left: 25px;top: 6px;text-align:left;}
 #CollectionSpace{font-size: 0.95em;text-align:left; margin-top: 3px; margin-left: 250px; min-height:160px;}
-.CollectionSpaceExp {position: absolute;left: 249px;top: 6px;font-size: 0.95em;text-align:left;}
-.CollectionStatsAnon {margin-bottom:15px;}
-.CollectBack h2 {font-size: 1.3em;}
-#CollectionMenu ul {padding:0.2em 0;margin:0;list-style:none;}
-#CollectionMenu li {padding:0;margin:0 8px 1px 0;float:left;white-space:nowrap;}
-#CollectionMenuExp ul {padding:0.2em 0;margin:0;list-style:none;}
-#CollectionMenuExp li {padding:0;margin:0 8px 1px 0;float:left;white-space:nowrap;}
-.CollectBack a:link, .CollectBack a:visited {text-decoration:none;}
-.CollectBack a:hover, .CollectBack a:active {text-decoration:underline;}
-
-.CollectBack form {padding:0; margin:0;}
-.CollectBack .SearchWidth {width: 190px;font-size: 0.9em;margin: 0 0;padding-right: 28px;}
-.CollectBack .SearchWidthExp {width: 200px;font-size: 0.9em;margin: 0 0;padding: 0;}
-.CollectBack .SearchItem {margin: 0 0 10px;padding: 0;}
-.CollectBack .MinSearchItem {margin: 0;padding: 0;}
 
 #CentralSpace .SearchWidth {width: 550px;font-size: 0.9em ;margin: 0 0;}
 #CentralSpace .SearchWidthExp {width:200px;font-size: 0.9em ;margin: 0 0;padding: 0;}
@@ -878,22 +856,6 @@ input[type="number"].NumberSearchWidth {width:80px; margin: 0 10px;}
 .CollectionResourceAlign {width:110px;height:90px;text-align: center;vertical-align: middle;}
 .CollectionPanelShell .nopreview {font-size:60px;}
 
-#CollectionMinTitle{float: left;margin: 4px 10px 0 25px;}
-#CollectionMinDropTitle{float: left;padding:0.2em 0;margin-top: 6px;}
-#CollectionMinDrop{float: left;margin: 4px 0 0;padding:0.2em 0}
-#CollectionMinDrop form{margin:0;padding:0}
-#CollectionMinitems{float: left;margin: 5px 10px 0;padding:0.35em 0}
-#CollectionMinRightNav{float: right;margin: 4px 25px 0 0;padding:0.2em 0}
-#CollectionMinRightNav #toggleThumbsLink, #CollectionMinRightNav .ActionsContainer {float:right;}
-.CollectionTitleLinks a {margin: 5px 4px;}
-#CollectionMinDiv .ToggleThumbsContainer {float: left; padding: 0 12px 0 24px; margin-top: 9px;border-right: 1px solid #E0E0E0;}
-#CollectionMinDiv #CollectionMinDropTitle {margin-left: 12px;}
-
-#CollectionMinDrop .SearchWidth {width: 190px;margin:0; min-height: 20px;}
-#CollectionMinDrop .SearchWidthExp {width: 200px;font-size: 0.7em ;margin:0;padding: 0;}
-#CollectionMinRightNav ul {padding:0 0;margin:0;list-style:none;}
-#CollectionMinRightNav li {display:inline;padding:0 0.35em 0 0.5em;margin:0;}
-
 /* Chosen support - General */
 .chosen-container .chosen-results li {word-wrap: normal;}
 
@@ -901,7 +863,6 @@ input[type="number"].NumberSearchWidth {width:80px; margin: 0 10px;}
 .chosen-container.chosen-drop-up.chosen-container-active.chosen-with-drop .chosen-drop {border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 0; border-bottom-left-radius: 0;}
 .chosen-container.chosen-drop-up.chosen-container-active.chosen-with-drop .chosen-single {border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;}
 .chosen-container.chosen-drop-up .chosen-drop {top: auto; bottom: 100%;}
-#colselect2 .chosen-container, #CollectionMinDiv .ActionsContainer .chosen-container {text-align:left;}
 
 /* Chosen support */
 #CentralSpace .ChosenDateMonth {width:88px !important;}
@@ -1092,8 +1053,6 @@ input[type="number"].NumberSearchWidth {width:80px; margin: 0 10px;}
 .RecordPanelLarge #ResourceToolsContainer, .FloatingOptions {
     display: inline-grid;
 }
-
-
 
 .RecordPanel .PictureDoc {float: left;margin: 50px 130px;}
 
@@ -2069,10 +2028,6 @@ div.video-js {margin:auto;}
     margin-bottom: 20px;
     }
 /* Dropdown Actions */
-#CollectionMenu .ActionsContainer {
-    margin: 0;
-}
-
 .ListTools .ActionsContainer select {
     width: 250px;
 }
@@ -2601,8 +2556,6 @@ form.FormFilter button.ClearButton {
     border: 1px solid red !important;
     margin: -2px ;
 }
-
-.CollectBack .CollectionResourceRemove, .CollectBack .CollectionResourceRemove:hover {text-decoration:none;}
 
 .JumpPanel input
     {
@@ -3760,11 +3713,6 @@ label {
     bottom: 0px;
     pointer-events: none;
     z-index: 99;
-}
-
-#toggleThumbsLink i {
-    margin-right: 6px;
-    font-size: 20px;
 }
 
 #UICenter.NoSearch {

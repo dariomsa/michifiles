@@ -2207,7 +2207,6 @@ $lang["shared_collections"] = "Shared collections";
 $lang["internal"] = "Internal";
 $lang["managecollectionslink"] = "Manage collections";
 $lang["showcollectionindropdown"] = "Show in collection bar";
-$lang["entercollectionname"] = "Enter name, then press Return";
 $lang["embedded_metadata"] = "Embedded metadata";
 $lang["embedded_metadata_extract_option"] = "Extract";
 $lang["embedded_metadata_donot_extract_option"] = "Do not extract";
@@ -2726,11 +2725,6 @@ $lang["systemconsoledebuglog"] = "Debug log";
 $lang["systemconsoleturnoffafter"] = "Turn off after";
 $lang["systemconsoleonpermallusers"] = "On (permanently for all users)";
 $lang["systemconsoleonallusers"] = "On (all users)";
-
-/* Global Trash Bin */
-$lang['trash_bin_title'] = 'Remove';
-$lang['trash_bin_delete_dialog_title'] = 'Remove resource?';
-/* End of Global Trash Bin strings */
 
 /* My Account Strings */
 $lang["managecontent_defaulttextused"] = "The text for the default language (?) is currently being used. Edit the text below to create an alternative version for this language / user group selection";

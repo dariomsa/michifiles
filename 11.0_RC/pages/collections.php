@@ -727,7 +727,7 @@ jQuery(function () {
 </script>
 <div class="collection-bar-holder <?php echo $collection_holder_state; ?>">
     <div style="display:none;" id="currentusercollection"><?php echo (int) $usercollection; ?></div>
-    <script>usercollection='<?php echo escape($usercollection) ?>';</script>
+    <script>usercollection='<?php echo escape($usercollection); ?>';</script>
     <div class="collection-bar-toggle-button <?php echo ($collection_holder_state == "state-closed" && $pulse == true) ? "pulse-animation" : ""; ?>"><i class="icon-layout-dashboard"></i></div>
     <div class="collection-bar-actions-section">
         <div class="collection-bar-actions-form">
@@ -741,7 +741,7 @@ jQuery(function () {
                     </div>
                 </div>
                 <div class="wrapper">
-                    <form method="get" id="colselect" onsubmit="newcolname=encodeURIComponent(jQuery('#collection_name_input').val());CollectionDivLoad('<?php echo $baseurl_short?>pages/collections.php?collection=new&search=<?php echo urlencode($search)?>&k=<?php echo urlencode($k) ?>&entername='+newcolname);return false;">
+                    <form method="get" id="colselect" onsubmit="newcolname=encodeURIComponent(jQuery('#collection_name_input').val());CollectionDivLoad('<?php echo $baseurl_short; ?>pages/collections.php?collection=new&search=<?php echo urlencode($search); ?>&k=<?php echo urlencode($k); ?>&entername='+newcolname);return false;">
                         <div id="entername" class="collection-bar-name-input">
                             <input id="collection_name_input" type="text" class="SearchWidth"></input>
                             <div class="collection-bar-name-button-group">
@@ -755,7 +755,7 @@ jQuery(function () {
                     <select 
                         name="collection"
                         id="collection"
-                        aria-label="<?php echo escape($lang["collections"]) ?>"
+                        aria-label="<?php echo escape($lang["collections"]); ?>"
                         onchange="if (document.getElementById('collection').value == 'new') {
                             document.getElementById('collection').style.display = 'none';
                             document.getElementById('entername').style.display = 'flex';
@@ -764,9 +764,9 @@ jQuery(function () {
                             } 
                             <?php if (!checkperm('b')) { ?>
                                 ChangeCollection( jQuery(this).val(), 
-                                    '<?php echo urlencode($k)  ?>', 
-                                    '<?php echo urlencode($usercollection) ?>',
-                                    '<?php echo $change_col_url?>' );
+                                    '<?php echo urlencode($k); ?>', 
+                                    '<?php echo urlencode($usercollection); ?>',
+                                    '<?php echo $change_col_url; ?>' );
                             <?php } else { ?>
                                 document.getElementById('colselect').submit();
                             <?php } ?>"
@@ -793,7 +793,7 @@ jQuery(function () {
                                         $found = true;
                                     } ?>
                                 >
-                                    <?php echo i18n_get_collection_name($list[$n]) ?>
+                                    <?php echo i18n_get_collection_name($list[$n]); ?>
                                 </option>
                                 <?php
                             }
@@ -805,18 +805,18 @@ jQuery(function () {
 
                             if ($notfound !== false) {
                                 ?>
-                                <option value="<?php echo escape($notfound['ref']); ?>" selected><?php echo i18n_get_collection_name($notfound) ?></option>
+                                <option value="<?php echo escape($notfound['ref']); ?>" selected><?php echo i18n_get_collection_name($notfound); ?></option>
                                 <?php
                             } elseif ($validcollection == 0) {
                                 ?>
-                                <option selected><?php echo escape($lang["error-collectionnotfound"]) ?></option>
+                                <option selected><?php echo escape($lang["error-collectionnotfound"]); ?></option>
                                 <?php
                             }
                         }
 
                         if (can_create_collections()) {
                             ?>
-                            <option value="new">(<?php echo escape($lang["createnewcollection"])?>)</option>
+                            <option value="new">(<?php echo escape($lang["createnewcollection"]); ?>)</option>
                             <?php
                         }
                         ?>
@@ -824,7 +824,11 @@ jQuery(function () {
                 </div>
             </div>
             <div class="field actions-field">
-                <div class="label-holder"><label for="collections_action_selection_bottom_<?php echo (int) $usercollection; ?>">Actions</label></div>
+                <div class="label-holder">
+                    <label for="collections_action_selection_bottom_<?php echo (int) $usercollection; ?>">
+                        <?php echo escape($lang["actions"]); ?>
+                    </label>
+                </div>
                 <div class="wrapper">
                     <?php
                     // Render dropdown actions
@@ -904,13 +908,13 @@ jQuery(function () {
 
                     ?>
                     <!--Resource Panel-->
-                    <div class="collection-bar-resource-card" id="ResourceShell<?php echo urlencode($ref) ?>"  data-draggable="yes">
+                    <div class="collection-bar-resource-card" id="ResourceShell<?php echo urlencode($ref); ?>"  data-draggable="yes">
 
                         <a
                             class="collection-bar-resource-card-link"
                             onclick="return <?php echo $resource_view_modal ? 'Modal' : 'CentralSpace'; ?>Load(this,true);"
-                            href="<?php echo $resource_url ?>"
-                            aria-label="Open resource"
+                            href="<?php echo $resource_url; ?>"
+                            aria-label="<?php echo escape(i18n_get_translated($result[$n]["field" . $view_title_field])); ?>"
                         ></a>
                         
                         <?php
@@ -932,8 +936,8 @@ jQuery(function () {
                                     ?>
                                     <img border="0"
                                         src="<?php echo $colimgpath['url']; ?>"
-                                        title="<?php echo escape(i18n_get_translated($result[$n]["field" . $view_title_field]))?>"
-                                        alt="<?php echo escape(i18n_get_translated($result[$n]["field" . $view_title_field]))?>"                                   
+                                        title="<?php echo escape(i18n_get_translated($result[$n]["field" . $view_title_field])); ?>"
+                                        alt="<?php echo escape(i18n_get_translated($result[$n]["field" . $view_title_field])); ?>"                                   
                                     />
                                 <?php
                                 } else {
@@ -941,7 +945,6 @@ jQuery(function () {
                                 }
                                 hook("aftersearchimg", "", array($result[$n]));
                                 ?>
-                                <!-- </a> -->
                                 <div class="collection-bar-resource-card-image-overlay"></div>
                             </div>
                         <?php 
@@ -1016,7 +1019,7 @@ jQuery(function () {
                 <div class="collection-bar-resource-card" data-draggable="no">
                     <a class="collection-bar-resource-card-link" 
                         onclick="return CentralSpaceLoad(this,true);" 
-                        href="<?php echo $baseurl_short?>pages/search.php?search=!collection<?php echo $usercollection?>&k=<?php echo urlencode($k) ?>"
+                        href="<?php echo $baseurl_short?>pages/search.php?search=!collection<?php echo escape($usercollection); ?>&k=<?php echo urlencode($k); ?>"
                         aria-label="<?php echo escape($lang['viewall'])?>">
                     </a>
                     <div class="collection-bar-resource-card-image">
