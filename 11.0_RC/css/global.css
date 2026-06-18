@@ -5297,15 +5297,35 @@ header.LoginHeader {
 
 .resource-card-pill {
     display: flex;
-    padding: var(--space-4) var(--space-8);
+    padding: 0 var(--space-8);
     align-items: center;
     gap: 4px;
     border-radius: var(--space-16);
-    white-space: nowrap;
     font-size: 13px;
     font-style: normal;
     font-weight: 400;
-    line-height: 100%;
+    line-height: 120%;
+    flex: 0 1 auto;
+    min-width: 0;
+}
+
+.resource-card-pill i {
+    flex: 0 0 auto;
+    width: 14px;
+    height: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.resource-card-pill span {
+    flex: 0 1 auto;
+    margin: var(--space-4) 0;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .resource-card-id {
