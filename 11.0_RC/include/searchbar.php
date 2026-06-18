@@ -715,8 +715,8 @@ $selected_search_tab = getval("selected_search_tab", "search");
                             }
                         </script>
         
+                        <?php if ($simple_search_date) { ?>
                         <div id="basicdate" class="field-input" <?php echo $simpleSearchFieldsAreHidden ? 'style="display:none;"' : ''; ?>>
-                            <?php if ($simple_search_date) { ?>
                                 <label for="basicyear"><?php echo escape($lang["bydate"]); ?></label>
                                 <select id="basicyear" name="basicyear" class="SearchWidthHalf" title="<?php echo escape($lang['year']); ?>" aria-label="<?php echo escape($lang['year']); ?>">
                                     <option selected="selected" value=""><?php echo escape($lang["anyyear"]); ?></option>
