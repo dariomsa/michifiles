@@ -4962,6 +4962,10 @@ header.LoginHeader {
 
 /* Tablet */
 @media (min-width: 768px) {
+    :root {
+        --uicenter-height: calc(100% - 144px);
+    }
+
     #menu-overlay {
         background: var(--colour-transparency-black-40);
     }
@@ -5006,6 +5010,10 @@ header.LoginHeader {
 
 /* Desktop */
 @media (min-width: 1366px) {
+    :root {
+        --uicenter-height: calc(100% - 80px);
+    }
+
     #header-container {
         display: flex;
         padding: var(--space-16) var(--space-32);
