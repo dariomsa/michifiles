@@ -1,9 +1,7 @@
 <?php
 // Uses Uppy and tus-php. For licenses refer to documentation/licenses/uppy.txt and documentation/licenses/tus-php.txt
 use Predis\Protocol\Text\Handler\StatusResponse;
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+
 include "../include/boot.php";
 $upload_session = "";
 $tusupload = false;
