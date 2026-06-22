@@ -3209,7 +3209,7 @@ function emulate_user($user, $usergroup = "")
             // We need to get all globals as we don't know what may be referenced here
             override_rs_variables_by_eval($GLOBALS, $config_options, 'usergroup');
 
-            process_config_options(['usergroup' => $group]);
+            process_config_options(['usergroup' => $usergroup]);
         }
     }
 
