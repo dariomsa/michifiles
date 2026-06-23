@@ -3616,7 +3616,7 @@ function set_processing_message(string $message)
 {
     debug_function_call(__FUNCTION__, func_get_args());
     global $userref,$userprocessing_messages,$set_processing_message_first_call;
-    if (PHP_SAPI === "cli" ||  defined("API_CALL")) {
+    if (PHP_SAPI === "cli" || defined("API_CALL") || (isset($GLOBALS['iiif_userid']) && $GLOBALS['iiif_userid'] === $userref)) {
         // Messages don't work unless using browser
         return;
     }
