@@ -1172,14 +1172,14 @@ function auto_create_user_account($hash = "")
         $message->templatevars = $templatevars;
         $message->eventdata = $eventdata;
         send_user_notification($approval_notify_users, $message);
-    }
 
-    // Send a confirmation e-mail to requester
-    send_mail(
-        $user_email,
-        "{$applicationname}: {$lang['account_request_label']}",
-        $lang['account_request_confirmation_email_to_requester']
-    );
+        // Send a confirmation e-mail to requester
+        send_mail(
+            $user_email,
+            "{$applicationname}: {$lang['account_request_label']}",
+            $lang['account_request_confirmation_email_to_requester']
+        );
+    }
 
     return true;
 }
