@@ -191,7 +191,7 @@ if ($parent > 0) {
 
     $branch_trail = array(
         array(
-            "title" => $field_data['title'],
+            "title" => i18n_get_translated($field_data['title']),
             "href"  => generateURL(
                 "{$baseurl_short}pages/collections_featured.php",
                 $general_url_params,

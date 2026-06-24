@@ -7977,7 +7977,7 @@ function get_smart_fc_branch_trail(int $node, int $tree_node_level, array $field
             get_node($opened_node, $subnodedata);
             $extra_trail = array(
                 array(
-                    "title" => $subnodedata['name'],
+                    "title" => i18n_get_translated($subnodedata['name']),
                     "href"  => generateURL(
                         "{$baseurl_short}pages/collections_featured.php",
                         $general_url_params,
