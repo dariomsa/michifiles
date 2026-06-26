@@ -3382,6 +3382,15 @@ input[type="text"]#iconpicker-input {
     font-size: 18px;
 }
 
+#HomeSiteText a {
+    color: var(--colour-global-white);
+    text-decoration: underline;
+}
+
+#HomeSiteText a:hover {
+    color: var(--colour-transparency-white-80);
+}
+
 #hero_banner {
     width: 100%;
     position: relative;
