@@ -48,10 +48,10 @@ if (isset($query_params['pretty'])) {
 $query = str_replace("&!|!|", "", ltrim($query, "!|!|&")); # remove joining &
 
 $validauthmodes = array("userkey", "native", "sessionkey");
-$function = getval("function", "");
 if (!in_array($authmode, $validauthmodes)) {
     $authmode = "userkey";
 }
+$function = getval("function", $query_params['function'] ?? "");
 if ($function != "login") {
     if ($authmode == "native") {
         debug("API: Native authmode, authenticating");
