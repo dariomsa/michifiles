@@ -1594,9 +1594,7 @@ input.contactadminbutton  {
 #HomePanelContainer {    
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-
     padding-top: var(--space-24);
-    width: 100%;
     max-width: 1376px;
     align-items: stretch;
     gap: var(--space-32);
@@ -1773,6 +1771,7 @@ p.tile_corner_box {
 @media (max-width:1366px) {
     #HomePanelContainer, .FeaturedSimpleLinks{
         justify-content: center;
+        margin: 0 var(--space-16);
     }
     .thmbs-tile-img, .tile-multi, .tile-placeholder, .tile-special-content {
         height: 170px;
