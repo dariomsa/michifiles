@@ -212,9 +212,11 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) {
                         researchcount = parseInt(messages[messagecount]['researchcount']);
                         admintotalcount = admintotalcount + researchcount;
                     }
-                    if (typeof(messages[messages.length - 1]['failedjobcount']) !== 'undefined') {
+                    if (typeof(messages[messages.length - 1]['failedjobcount']['user']) !== 'undefined') {
                         userfailedjobcount = parseInt(messages[messagecount]['failedjobcount']['user']);
                         usertotalcount     = usertotalcount + userfailedjobcount;
+                    }
+                    if (typeof(messages[messages.length - 1]['failedjobcount']['all']) !== 'undefined') {
                         failedjobcount     = parseInt(messages[messagecount]['failedjobcount']['all']);
                         admintotalcount = admintotalcount + failedjobcount;
                     }
