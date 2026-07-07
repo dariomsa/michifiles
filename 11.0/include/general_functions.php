@@ -3439,7 +3439,7 @@ function is_resourcespace_upgrade_available()
         ($product_version_data['major'] < $cvn_data['major'])
         || ($product_version_data['major'] == $cvn_data['major'] && $product_version_data['minor'] < $cvn_data['minor'])
     ) {
-        return true;
+        return $centralised_version_number;
     }
 
     return false;
