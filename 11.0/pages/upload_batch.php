@@ -1208,7 +1208,7 @@ jQuery(document).ready(function () {
 
         onBeforeUpload: (files) => {
             <?php
-            if ($upload_collection_name_required && $upload_then_edit && $replace_resource == "" && $replace == "" && $alternative == "")
+            if ($upload_collection_name_required && !$external_upload && $upload_then_edit && $replace_resource == "" && $replace == "" && $alternative == "")
                 { ?>
                 let upload_collection_name = document.getElementById("entercolname").value;
                 let upload_collection_id   = document.getElementById("collection_add").value;
