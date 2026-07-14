@@ -1353,24 +1353,33 @@ jQuery(document).ready(function () {
         });
 
     uppy.use(Tus, {
-            resume: true,
-            limit: <?php echo escape($upload_concurrent_limit); ?>,
-            endpoint: '<?php echo $baseurl ?>/pages/upload_batch.php',
-            retryDelays: <?php echo escape($upload_retry_delays); ?>,
-            withCredentials: true,
-            overridePatchMethod: true,
-            removeFingerprintOnSuccess: true,
-            <?php
-            // Add custom header for companion authentication as won't have access to the user's session cookie
-            $companion_new_token = generateCSRFToken($upload_session,"companion_upload");
-            echo "\nheaders: {
-                'uppy-auth-token'   : 'cs:" . escape($upload_session) . "-ct:" . escape($companion_new_token) . "'
-                },\n";
-            if(trim($upload_chunk_size) != "")
-                {
-                echo "chunkSize: " . escape(str_ireplace(array("kb","mb","gb"),array("000","000000","000000000"),$upload_chunk_size)) . ",\n";
-                }?>
-            })
+        <?php
+        if (is_array($upload_retry_delays)) {
+            $upload_retry_delays = array_filter($upload_retry_delays, "is_int_loose") ?: [0, 1000, 3000, 5000];
+
+            $upload_retry_delays = json_encode(array_map('intval', $upload_retry_delays));
+        } else {
+            $upload_retry_delays = '[0, 1000, 3000, 5000]';
+        }
+        ?>
+        resume: true,
+        limit: <?php echo (int) $upload_concurrent_limit; ?>,
+        endpoint: '<?php echo $baseurl ?>/pages/upload_batch.php',
+        retryDelays: <?php echo $upload_retry_delays; ?>,
+        withCredentials: true,
+        overridePatchMethod: true,
+        removeFingerprintOnSuccess: true,
+        <?php
+        // Add custom header for companion authentication as won't have access to the user's session cookie
+        $companion_new_token = generateCSRFToken($upload_session,"companion_upload");
+        echo "\nheaders: {
+            'uppy-auth-token'   : 'cs:" . escape($upload_session) . "-ct:" . escape($companion_new_token) . "'
+            },\n";
+        if(trim($upload_chunk_size) != "")
+            {
+            echo "chunkSize: " . escape(str_ireplace(array("kb","mb","gb"),array("000","000000","000000000"),$upload_chunk_size)) . ",\n";
+            }?>
+        })
         <?php
         foreach ($uploader_plugins as $uploader_plugin) {
             if ($uploader_plugin == "Onedrive") {
