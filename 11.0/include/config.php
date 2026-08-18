@@ -27,9 +27,15 @@ $api_scramble_key = '8ec6da0a7acfc0f4bb0c625f50b2e18e0e137da3436547a756653a949b9
 
 # Paths
 $ghostscript_path = '/usr/bin';
-$applicationname = 'ResourceSpace';
+$applicationname = 'El Comercio DAM';
 $defaultlanguage = 'es';
+$linkedheaderimgsrc = '/gfx/titles/logo-elcomercio.png';
 $homeanim_folder = 'filestore/system/slideshow_b73dfaf47366983';
+$allow_password_change = false;
+$disable_languages = true;
+$show_language_chooser = false;
+$user_preferences = false;
+$help_link = false;
 
 /*
 
@@ -78,6 +84,10 @@ $hide_real_filepath = true;
 $annotate_enabled = true;
 
 $plugins[] = "brand_guidelines";
+$plugins[] = "rse_workflow";
+$plugins[] = "licensemanager";
+$plugins[] = "resource_usage";
+$plugins[] = "track_field_history";
 
 $imagemagick_path = '/usr/bin';
 $exiftool_path = '/usr/bin';

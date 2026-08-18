@@ -1,1 +1,0 @@
-{"query":"select allowed_extensions value from resource_type where ref = ?","time":1784670785,"results":[{"value":null}]}

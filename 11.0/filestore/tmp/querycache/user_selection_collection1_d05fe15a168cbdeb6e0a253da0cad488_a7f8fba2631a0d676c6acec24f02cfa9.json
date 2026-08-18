@@ -1,1 +1,0 @@
-{"query":"SELECT ref AS `value` FROM collection WHERE `user` = ? AND `type` = ?  ORDER BY ref ASC","time":1787004108,"results":[{"value":2}]}

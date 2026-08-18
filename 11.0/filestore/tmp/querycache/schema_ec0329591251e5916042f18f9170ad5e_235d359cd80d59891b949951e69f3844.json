@@ -1,1 +1,0 @@
-{"query":"SELECT type value FROM resource_type_field WHERE ref=?","time":1786981200,"results":[{"value":0}]}

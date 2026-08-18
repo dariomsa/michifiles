@@ -1,1 +1,0 @@
-{"query":"SELECT parameter, `value` FROM user_preferences WHERE user IS NULL AND usergroup IS NULL","time":1787067369,"results":[]}

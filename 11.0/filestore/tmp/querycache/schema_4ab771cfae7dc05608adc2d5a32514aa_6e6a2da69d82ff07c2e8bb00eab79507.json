@@ -1,1 +1,0 @@
-{"query":"select config_options value from resource_type where ref=?","time":1786981200,"results":[{"value":null}]}

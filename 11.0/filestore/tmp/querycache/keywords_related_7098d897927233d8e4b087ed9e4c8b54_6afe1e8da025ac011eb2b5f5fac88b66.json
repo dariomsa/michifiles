@@ -1,1 +1,0 @@
-{"query":"SELECT keyword value FROM keyword_related WHERE related = ? UNION SELECT related value FROM keyword_related WHERE (keyword = ? OR keyword IN (SELECT keyword value FROM keyword_related WHERE related = ?)) AND related <> ?","time":1784608494,"results":[]}

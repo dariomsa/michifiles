@@ -1,1 +1,0 @@
-{"query":"SELECT `name`, `text`, `page` FROM site_text WHERE language = ? AND specific_to_group = ? AND (page = ? OR page = 'all' OR page = '' )","time":1786981208,"results":[]}
