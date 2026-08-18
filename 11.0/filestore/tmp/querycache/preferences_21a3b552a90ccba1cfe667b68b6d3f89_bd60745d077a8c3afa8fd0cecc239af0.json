@@ -1,0 +1,1 @@
+{"query":"SELECT `value` FROM user_preferences WHERE parameter = ? AND (user = ? OR usergroup = ?) ORDER BY usergroup LIMIT 1","time":1787004108,"results":[]}

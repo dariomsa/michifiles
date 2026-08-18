@@ -1,4 +1,0 @@
-Filter rule definition.
-filter_rule,int(11),
-node_condition,int(11),
-node,int(11),

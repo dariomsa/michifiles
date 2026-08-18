@@ -1,0 +1,1 @@
+{"query":"SELECT language,name,text FROM site_text WHERE (page=? OR page='all' OR page='') AND (specific_to_group IS NULL OR specific_to_group=0)","time":1784670191,"results":[]}

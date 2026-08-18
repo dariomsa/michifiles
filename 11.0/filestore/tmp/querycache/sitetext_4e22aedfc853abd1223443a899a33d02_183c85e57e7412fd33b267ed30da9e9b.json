@@ -1,0 +1,1 @@
+{"query":" SELECT `name`,\n                `text`,\n                `page`,\n                `language`, specific_to_group \n            FROM site_text\n            WHERE (`language` = ? OR `language` = ?)\n            AND (specific_to_group IS NULL OR specific_to_group = 0)\n        AND (page = ? OR page = 'all' OR page = '' )","time":1784670817,"results":[]}

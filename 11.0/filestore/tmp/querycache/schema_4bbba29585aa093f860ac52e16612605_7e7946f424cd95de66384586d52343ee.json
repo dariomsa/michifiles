@@ -1,0 +1,1 @@
+{"query":"SELECT ref, type FROM resource_type_field WHERE ref = ? OR name = ?","time":1784670244,"results":[{"ref":51,"type":0}]}

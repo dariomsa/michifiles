@@ -1,0 +1,1 @@
+{"query":"SELECT ref, resource_ref, homepage_show, login_show FROM slideshow","time":1787067375,"results":[{"ref":"1","resource_ref":null,"homepage_show":"1","login_show":"1"}]}

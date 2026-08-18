@@ -1,0 +1,1 @@
+{"query":"SELECT parameter, `value` FROM user_preferences WHERE usergroup = ?","time":1786985705,"results":[]}
