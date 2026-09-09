@@ -36,6 +36,12 @@ $disable_languages = true;
 $show_language_chooser = false;
 $user_preferences = false;
 $help_link = false;
+$allow_password_reset = false;
+$allow_account_request = false;
+$show_login_timezone = false;
+$rdec_enable_selection_batch_actions = false;
+$rdec_upload_review_redirect_recent = true;
+$rdec_upload_default_pending = true;
 
 /*
 

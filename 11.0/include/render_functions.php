@@ -3609,7 +3609,11 @@ function render_selected_resources_counter($i)
 */
 function render_edit_selected_btn()
     {
-    global $baseurl_short, $lang, $USER_SELECTION_COLLECTION, $restypes, $archive;
+    global $baseurl_short, $lang, $USER_SELECTION_COLLECTION, $restypes, $archive, $rdec_enable_selection_batch_actions;
+
+    if (isset($rdec_enable_selection_batch_actions) && !$rdec_enable_selection_batch_actions) {
+        return;
+    }
 
     $search = "!collection{$USER_SELECTION_COLLECTION}";
     # Editable_only=true (so returns editable resources only)
@@ -3694,7 +3698,11 @@ function render_clear_selected_btn()
     $attributes .= " data-csrf-token-identifier=\"{$CSRF_token_identifier}\"";
     $attributes .= " data-csrf-token=\"" . generateCSRFToken($usersession, "clear_selected_btn_{$USER_SELECTION_COLLECTION}") . "\"";
 
-    render_filter_bar_button($lang["clear_selected"], $attributes, ICON_REMOVE);
+    ?>
+    <div class="InpageNavLeftBlock ClearSelectedButtonBlock">
+        <button type="button" <?php echo $attributes; ?>><?php echo ICON_REMOVE . escape($lang["clear_selected"]); ?></button>
+    </div>
+    <?php
     }
 
 
@@ -3706,7 +3714,8 @@ function render_clear_selected_btn()
 function render_selected_collection_actions()
     {
     global $USER_SELECTION_COLLECTION, $usercollection, $usersession, $lang, $CSRF_token_identifier, $search,
-           $render_actions_extra_options, $render_actions_filter, $resources_count, $result;
+           $render_actions_extra_options, $render_actions_filter, $resources_count, $result,
+           $rdec_enable_selection_batch_actions;
 
     $orig_resources_count = $resources_count;
     $orig_search = $search;
@@ -3734,6 +3743,12 @@ function render_selected_collection_actions()
         'link_consent_batch',
         'unlink_consent_batch'
     );
+
+    if (isset($rdec_enable_selection_batch_actions) && !$rdec_enable_selection_batch_actions) {
+        $valid_selection_collection_actions = array_diff($valid_selection_collection_actions, array(
+            'delete_all_in_collection',
+        ));
+    }
 
     if($refs_to_remove > 0)
         {

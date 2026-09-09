@@ -64,28 +64,17 @@ function HookRse_workflowViewPageevaluation()
 
                     hook("rse_wf_archivechange","",array($ref,$resource["archive"],$workflowaction["statusto"]));
                                                 
-                    if (checkperm("z" . $workflowaction["statusto"]))
+                    ?>
+                    <script type="text/javascript">
+                    CentralSpaceShowProcessing();
+                    if(jQuery("#modal").is(":visible"))
                         {
-                        ?>
-                        <script type="text/javascript">
-                        styledalert('<?php echo escape($lang["success"]); ?>','<?php echo escape($lang["rse_workflow_saved"]) . "&nbsp;" . escape($lang["status" . $workflowaction["statusto"]]);?>');
-                        if(jQuery("#modal").is(":visible"))
-                            {
-                            ModalClose();
-                            }
-                        else
-                            {
-                            window.setTimeout(function(){CentralSpaceLoad(baseurl_short);},1000);
-                            }
-                        </script>
-                        <?php
-                        exit();
+                        ModalClose();
                         }
-                    else
-                        { 
-                        echo "<div class=\"PageInformal\">" . $lang["rse_workflow_saved"] . " " . $lang["status" . $workflowaction["statusto"]] . "</div>";
-                        $resource["archive"]=$workflowaction["statusto"];
-                        }
+                    window.setTimeout(function(){CentralSpaceLoad(window.location.href, true, null, false);}, 250);
+                    </script>
+                    <?php
+                    exit();
                     } 
                 }
             }
@@ -180,7 +169,7 @@ function HookRse_workflowViewAdditionaldownloadtabs()
                     ?>
                     <input type="hidden" name="rse_workflow_action_<?php echo $validaction["ref"]; ?>" id="rse_workflow_action_<?php echo $validaction["ref"]; ?>" value="true" >
                     <input type="hidden" name="more_workflow_action_<?php echo $validaction["ref"]; ?>" id="more_workflow_action_<?php echo $validaction["ref"]; ?>" value="" >       
-                    <input type="submit" name="rse_workflow_action_submit_<?php echo $validaction["ref"]; ?>" id="rse_workflow_action_submit_<?php echo $validaction["ref"]; ?>" value="&nbsp;<?php echo escape(i18n_get_translated($validaction["buttontext"],"workflow-actions")); ?>&nbsp;" onClick="return <?php echo $modal ? "Modal" : "CentralSpace"; ?>Post(document.getElementById('resource_<?php echo $ref; ?>_workflowaction<?php echo $validaction['ref']; ?>'), true);" >
+                    <input type="submit" name="rse_workflow_action_submit_<?php echo $validaction["ref"]; ?>" id="rse_workflow_action_submit_<?php echo $validaction["ref"]; ?>" value="&nbsp;<?php echo escape(i18n_get_translated($validaction["buttontext"],"workflow-actions")); ?>&nbsp;" onClick="this.disabled=true;this.value='...';CentralSpaceShowProcessing();return <?php echo $modal ? "Modal" : "CentralSpace"; ?>Post(document.getElementById('resource_<?php echo $ref; ?>_workflowaction<?php echo $validaction['ref']; ?>'), true);" >
                     <?php
                     generateFormToken("resource_{$ref}_workflowaction{$validaction['ref']}");
                     hook("rse_wf_formend","",array($resource["archive"],$validaction["statusto"]));

@@ -1,0 +1,1 @@
+{"query":"SELECT `value` FROM user_preferences WHERE parameter = ? AND user = ?","time":1787330879,"results":[{"value":"America\/Guayaquil"}]}

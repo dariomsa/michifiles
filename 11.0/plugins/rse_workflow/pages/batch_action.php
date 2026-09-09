@@ -217,6 +217,8 @@ function process_wf_action(e)
             if(typeof response.status !== "undefined" && response.status == "success")
                 {
                 console.debug("response.data = %o", response.data);
+                ModalClose();
+                CentralSpaceLoad(window.location.href, true, null, false);
                 }
             })
         .fail(function(data, textStatus, jqXHR)
@@ -232,7 +234,6 @@ function process_wf_action(e)
         .always(function()
             {
             CentralSpaceHideProcessing();
-            ModalClose();
             });
 
     return;

@@ -1,0 +1,1 @@
+{"query":"SELECT name, value FROM sysvars","time":1788911399,"results":[{"name":"upgrade_system_level","value":"30"},{"name":"centralised_version_number","value":"11.0\n"},{"name":"last_cvn_update","value":"2026-09-04 22:09:15"}]}

@@ -308,6 +308,7 @@ include "include/login_background.php";
     </div><!-- end of login_box -->
 
     <div>
+        <?php if (!isset($show_login_timezone) || $show_login_timezone) { ?>
         <div class="field-input">
             <label for="user_local_tz"><?php echo escape($lang["local_tz"]); ?></label>
             <select id="user_local_tz" name="user_local_timezone">
@@ -336,6 +337,7 @@ include "include/login_background.php";
                 });
             </script>
         </div>
+        <?php } ?>
 
         <?php if (!$disable_languages) { ?>
             <div class="field-input">

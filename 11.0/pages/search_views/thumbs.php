@@ -38,6 +38,9 @@ if ($use_selection_collection && in_array($ref, $selection_collection_resources)
                     ?>
                 >
                 <span class="check" aria-hidden="true" title="<?php echo escape($lang['action-selectresource'] . (($resource_view_title != "") ? " - " . $resource_view_title : "")) ?>"></span>
+                <span class="resource-card-usage-count" title="<?php echo escape($lang['resource_usage'] ?? 'Usos'); ?>">
+                    <?php echo (int) ps_value("SELECT COUNT(*) AS value FROM resource_usage WHERE resource = ?", array("i", $ref), 0); ?>
+                </span>
                 </label>
             <?php } else { ?>
                 <input type="checkbox" class="checkselect" style="opacity: 0;">
@@ -243,6 +246,14 @@ if ($use_selection_collection && in_array($ref, $selection_collection_resources)
                         <span><?php echo isset($lang["status" . $result[$n]['archive']]) ? (escape($lang["status" . $result[$n]['archive']])) : (escape($lang["status"] . "&nbsp;" . $result[$n]['archive'])); ?></span>
                     </div>
                 <?php
+                }
+                if (!empty($result[$n]["creation_date"])) {
+                    ?>
+                    <div class="resource-card-pill resource-card-upload-date">
+                        <i class="icon-calendar"></i>
+                        <span><?php echo escape(nicedate($result[$n]["creation_date"], false, true)); ?></span>
+                    </div>
+                    <?php
                 }
                 if (isset($show_annotation_count) && $show_annotation_count) {
                     $annotations_count = $result[$n]["annotation_count"] ?? getResourceAnnotationsCount($ref);

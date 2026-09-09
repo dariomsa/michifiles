@@ -176,7 +176,7 @@ if ($upload_review_mode)
                 $defaultarchivestate = get_default_archive_state();
             }
             $redirectparams = array(
-                "search"=>"!contributions" . $userref,
+                "search"=>(isset($rdec_upload_review_redirect_recent) && $rdec_upload_review_redirect_recent ? "!last1000" : "!contributions" . $userref),
                 "order_by"=>"resourceid",
                 "sort"=>"DESC",
                 "archive"=>$defaultarchivestate,
@@ -190,7 +190,7 @@ if ($upload_review_mode)
                 $redirectparams["promptsubmit"] = 'true';
                 }
             
-            $url = $redirecturl != "" ? $redirecturl : generateURL($baseurl . "/pages/search.php",$redirectparams);
+            $url = ($redirecturl != "" && !(isset($rdec_upload_review_redirect_recent) && $rdec_upload_review_redirect_recent)) ? $redirecturl : generateURL($baseurl . "/pages/search.php",$redirectparams);
             }
         redirect($url);
         exit();
@@ -433,6 +433,14 @@ if (!($edit_access_for_contributor && $userref == $resource['created_by'] && !$u
     {
     $setarchivestate = get_default_archive_state($setarchivestate);
     }
+
+if (
+    isset($rdec_upload_default_pending)
+    && $rdec_upload_default_pending
+    && ($ref < 0 || $upload_review_mode)
+) {
+    $setarchivestate = -2;
+}
 
 $uploadparams["status"] = $setarchivestate;
 
@@ -812,7 +820,7 @@ if ((getval("autosave","")!="") || (getval("tweak","")=="" && getval("submitted"
                             else
                                 {
                                 $redirectparams = array(
-                                    "search"=>"!contributions" . $userref,
+                                    "search"=>(isset($rdec_upload_review_redirect_recent) && $rdec_upload_review_redirect_recent ? "!last1000" : "!contributions" . $userref),
                                     "order_by"=>"resourceid",
                                     "sort"=>"DESC",
                                     "archive"=>$setarchivestate,
@@ -825,7 +833,7 @@ if ((getval("autosave","")!="") || (getval("tweak","")=="" && getval("submitted"
                                     $redirectparams["promptsubmit"] = 'true';
                                     }
 
-                                $url = $redirecturl != "" ? $redirecturl : generateURL($baseurl . "/pages/search.php",$redirectparams);
+                                $url = ($redirecturl != "" && !(isset($rdec_upload_review_redirect_recent) && $rdec_upload_review_redirect_recent)) ? $redirecturl : generateURL($baseurl . "/pages/search.php",$redirectparams);
                                 }
                             ?>
                             <script>CentralSpaceLoad('<?php echo $url; // The $url var has been generated or escaped above ?>',true);</script>

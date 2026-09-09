@@ -178,6 +178,16 @@ $from_advanced_search                   = getval('advsearch', '') == 'true';
 // Set to process upload once file upload complete
 $processupload                          = getval("processupload","") != "";
 
+if (
+    isset($rdec_upload_default_pending)
+    && $rdec_upload_default_pending
+    && $replace == ""
+    && $replace_resource == ""
+    && $alternative == ""
+) {
+    $setarchivestate = -2;
+}
+
 // When uploading, if there are any files in the queue that have similar names plus a suffix to distinguish between original
 // and alternatives (see $upload_alternatives_suffix) then, attach the matching alternatives to the resource they belong to
 $attach_alternatives_found_to_resources = (trim($upload_alternatives_suffix) != '') && (trim($alternative) == '');

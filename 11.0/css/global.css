@@ -1506,6 +1506,11 @@ h2.CollapsibleSectionHead, h1.CollapsibleSectionHead
     vertical-align: top;
 }
 
+#search_action_selection {
+    width: 180px;
+    max-width: 180px;
+}
+
 .update_result_order_button {
     display: inline-block;
     padding: 6px 8px 5px 8px;
@@ -5276,6 +5281,27 @@ header.LoginHeader {
     flex: 0 0 auto; 
 }
 
+.resource-card-action-bar label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-6);
+}
+
+.resource-card-usage-count {
+    display: inline-flex;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 var(--space-6);
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--space-16);
+    background: var(--colour-feedback-success-lighter);
+    color: var(--colour-feedback-success-dark);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1;
+}
+
 .resource-card-action-bar input:checked+.check::before {
     content: "\e06c"; /* Lucide check icon */
 }
@@ -5477,6 +5503,11 @@ header.LoginHeader {
 }
 
 .resource-card-annotations {
+    color: var(--colour-typography-700);
+    background: var(--colour-surface-200);
+}
+
+.resource-card-upload-date {
     color: var(--colour-typography-700);
     background: var(--colour-surface-200);
 }

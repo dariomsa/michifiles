@@ -1,0 +1,1 @@
+{"query":"SELECT parameter, `value` FROM user_preferences WHERE user IS NULL AND usergroup IS NULL","time":1788911399,"results":[{"parameter":"global_font","value":"Roboto"},{"parameter":"basic_simple_search","value":"1"},{"parameter":"show_collection_name","value":"1"}]}
