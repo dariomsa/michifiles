@@ -5,6 +5,8 @@
     cols=80 
     name="<?php echo $name; ?>"
     id="<?php echo $name; ?>"
+    spellcheck="true"
+    lang="es"
     <?php
     if ($edit_autosave) {
         ?>

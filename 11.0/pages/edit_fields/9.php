@@ -37,6 +37,8 @@ $add_searched_nodes_function_call = '';
         <?php } ?>
         name="<?php echo $name; ?>_selector"
         placeholder="<?php echo escape($lang['starttypingkeyword']); ?>"
+        spellcheck="true"
+        lang="es"
     />
     <?php
 

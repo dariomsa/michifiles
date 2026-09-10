@@ -10,6 +10,8 @@ global $tinymce_plugins, $tinymce_toolbar, $user_pref_appearance;
         class="stdwidth"
         name="<?php echo escape($name); ?>"
         id="<?php echo ((isset($modal) && $modal) ? "Modal_" : "CentralSpace_") . escape($name); ?>"
+        spellcheck="true"
+        lang="es"
     ><?php if ($value == strip_tags($value)) {
         $value = nl2br($value);
      }
@@ -32,6 +34,8 @@ global $tinymce_plugins, $tinymce_toolbar, $user_pref_appearance;
         promotion: false,
         branding: false,
         contextmenu: false, // Required to enable native copy and pasting
+        browser_spellcheck: true,
+        language: 'es',
         <?php
         if (isset($user_pref_appearance)) {
             if ($user_pref_appearance == "dark") {
@@ -68,4 +72,3 @@ global $tinymce_plugins, $tinymce_toolbar, $user_pref_appearance;
     });
 
 </script>
-

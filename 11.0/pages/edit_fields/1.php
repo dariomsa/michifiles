@@ -120,6 +120,8 @@ if ($show_merge_options) {
     cols=50
     name="<?php echo $name?>"
     id="<?php echo $name?>"
+    spellcheck="true"
+    lang="es"
     <?php
     echo $edit_autosave ? 'onChange="AutoSave(\'' .  $field["ref"] . '\');"' : '';
     ?>

@@ -132,6 +132,8 @@ if ($field['geomapping'] == FIELD_GEO_LOCATION::both->value) {
     name="<?php echo $name?>"
     id="<?php echo $name?>"
     value="<?php echo escape((string)$value); ?>"
+    spellcheck="true"
+    lang="es"
     <?php
     echo $edit_autosave ? 'onChange="AutoSave(\'' .  $field["ref"] . '\');"' : '';
     ?>
