@@ -31,6 +31,7 @@ function upload_file($ref, $no_exif = false, $revert = false, $autorotate = fals
     global $icc_extraction, $camera_autorotation, $camera_autorotation_ext;
     global $ffmpeg_supported_extensions, $ffmpeg_preview_extension, $pdf_pages;
     global $unoconv_extensions, $merge_filename_with_title, $merge_filename_with_title_default;
+    global $view_title_field, $rdec_title_from_filename_when_empty;
     global $file_checksums_offline, $file_upload_block_duplicates, $replace_batch_existing, $valid_upload_paths;
 
     $ref = (int) $ref;
@@ -388,6 +389,19 @@ function upload_file($ref, $no_exif = false, $revert = false, $autorotate = fals
             }
             autocomplete_blank_fields($ref, false);
         }
+
+        if (
+            !empty($rdec_title_from_filename_when_empty)
+            && isset($view_title_field)
+            && trim((string) get_data_by_field($ref, $view_title_field)) === ''
+        ) {
+            $source_filename = $original_filename ?? $filename ?? '';
+            $filename_title = trim(strip_extension(basename((string) $source_filename)));
+            if ($filename_title !== '') {
+                update_field($ref, $view_title_field, $filename_title);
+            }
+        }
+
         # Extract text from documents (e.g. PDF, DOC)
         if (
             isset($extracted_text_field)
