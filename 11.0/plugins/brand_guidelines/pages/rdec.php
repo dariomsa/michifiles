@@ -265,7 +265,7 @@ include_once RESOURCESPACE_BASE_PATH . '/include/header.php';
             <h1>Michipiti FILES</h1>
             <p>Sistema de Gestión de Activos Digitales y Normativa Editorial</p>
         </div>
-        <span class="michi-version">Manual Web v2.0</span>
+        <span class="michi-version">Manual Web v2.1</span>
     </header>
 
     <nav class="michi-tabs" aria-label="Secciones del manual">
@@ -365,12 +365,11 @@ include_once RESOURCESPACE_BASE_PATH . '/include/header.php';
                     <div class="michi-box">
                         <h3>Sección</h3>
                         <div class="michi-badges">
-                            <span class="michi-badge">Política</span>
-                            <span class="michi-badge">Economía</span>
-                            <span class="michi-badge">Cultura</span>
-                            <span class="michi-badge">Deportes</span>
-                            <span class="michi-badge">Tecnología</span>
-                            <span class="michi-badge">Opinión</span>
+                            <span class="michi-badge">Política y gobierno</span>
+                            <span class="michi-badge">Economía y negocios</span>
+                            <span class="michi-badge">Justicia y seguridad</span>
+                            <span class="michi-badge">Conflicto guerra y paz</span>
+                            <span class="michi-badge">Desastres y emergencias</span>
                         </div>
                     </div>
                     <div class="michi-box">
@@ -382,7 +381,9 @@ include_once RESOURCESPACE_BASE_PATH . '/include/header.php';
                             <span class="michi-badge">Columna</span>
                             <span class="michi-badge">Fotogalería</span>
                             <span class="michi-badge">Video</span>
-                            <span class="michi-badge">Documento</span>
+                            <span class="michi-badge">Documento fuente</span>
+                            <span class="michi-badge">Infografía</span>
+                            <span class="michi-badge">Audio / podcast</span>
                         </div>
                     </div>
                     <div class="michi-box">
@@ -411,8 +412,32 @@ include_once RESOURCESPACE_BASE_PATH . '/include/header.php';
                         </ul>
                     </div>
                     <div class="michi-box">
-                        <h3>Indexación SEO y Contexto</h3>
-                        <p>Registro de personas mencionadas, lugares, temas y <strong>Keywords SEO Temas Clave</strong>.</p>
+                        <h3>Temas Editoriales e Indexación SEO</h3>
+                        <p><strong>Temas Editoriales:</strong></p>
+                        <div class="michi-badges">
+                            <span class="michi-badge">Elecciones</span>
+                            <span class="michi-badge">Gobierno nacional</span>
+                            <span class="michi-badge">Función legislativa</span>
+                            <span class="michi-badge">Gobiernos seccionales</span>
+                            <span class="michi-badge">Relaciones internacionales</span>
+                            <span class="michi-badge">Partidos y movimientos</span>
+                            <span class="michi-badge">Protesta social</span>
+                            <span class="michi-badge">Educación</span>
+                            <span class="michi-badge">Medioambiente</span>
+                            <span class="michi-badge">Salud</span>
+                            <span class="michi-badge">Ciencia y tecnología</span>
+                            <span class="michi-badge">Deportes</span>
+                            <span class="michi-badge">Cultura y entretenimiento</span>
+                            <span class="michi-badge">Estilo de vida y ocio</span>
+                            <span class="michi-badge">Trabajo y empleo</span>
+                            <span class="michi-badge">Religión y creencias</span>
+                            <span class="michi-badge">Sociedad</span>
+                            <span class="michi-badge">Interés humano</span>
+                            <span class="michi-badge">Clima y tiempo</span>
+                            <span class="michi-badge">Ecuador</span>
+                            <span class="michi-badge">Internacional</span>
+                        </div>
+                        <p>Registro de personas mencionadas, lugares y <strong>Keywords SEO Temas Clave</strong>.</p>
                     </div>
                 </div>
             </div>
@@ -430,8 +455,8 @@ include_once RESOURCESPACE_BASE_PATH . '/include/header.php';
                 <div class="michi-grid-3 michi-small">
                     <div class="michi-box michi-box-accent"><strong>Title</strong><br><span class="michi-muted">Título descriptivo optimizado con la palabra clave principal.</span></div>
                     <div class="michi-box michi-box-accent"><strong>Caption</strong><br><span class="michi-muted">Descripción o leyenda detallada del recurso (Alt Text SEO).</span></div>
-                    <div class="michi-box"><strong>Sección editorial:</strong> Categoría principal del activo.</div>
-                    <div class="michi-box"><strong>Tipo editorial:</strong> Formato o género de la publicación.</div>
+                    <div class="michi-box"><strong>Sección editorial:</strong> Categoría principal del activo (ej. <em>Política y gobierno, Economía y negocios</em>).</div>
+                    <div class="michi-box"><strong>Tipo editorial:</strong> Formato (ej. <em>Noticia, Infografía, Audio / podcast</em>).</div>
                     <div class="michi-box"><strong>Estado legal / derechos:</strong> Tipo de licencia asignada.</div>
                     <div class="michi-box"><strong>Autor / redactor:</strong> Redactor o creador del contenido.</div>
                     <div class="michi-box"><strong>Fotógrafo / videógrafo:</strong> Autor de la captura visual.</div>
@@ -439,7 +464,7 @@ include_once RESOURCESPACE_BASE_PATH . '/include/header.php';
                     <div class="michi-box"><strong>Fecha de captura / creación:</strong> Fecha exacta de origen.</div>
                     <div class="michi-box"><strong>Personas mencionadas:</strong> Personajes o figuras retratadas.</div>
                     <div class="michi-box"><strong>Lugares:</strong> Ubicación geográfica o espacio físico.</div>
-                    <div class="michi-box michi-box-accent"><strong>Temas editoriales</strong><br><span class="michi-muted">Ejes conceptuales asociados a la publicación.</span></div>
+                    <div class="michi-box michi-box-accent"><strong>Temas editoriales</strong><br><span class="michi-muted">Ejes conceptuales asociados (ej. <em>Elecciones, Gobierno nacional, Medioambiente</em>).</span></div>
                     <div class="michi-box michi-box-accent"><strong>Keywords SEO</strong><br><span class="michi-muted">Términos y palabras clave estratégicas para motores de búsqueda y buscadores internos.</span></div>
                 </div>
             </div>
