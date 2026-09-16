@@ -36,7 +36,7 @@ function HookBrand_guidelinesAllHandleuserref()
     if (acl_can_view_brand_guidelines()) {
         $GLOBALS['custom_top_nav'][] = [
             'title' => '(lang)brand_guidelines_top_nav_title',
-            'link' => "{$GLOBALS['baseurl']}/plugins/brand_guidelines/pages/guidelines.php",
+            'link' => "{$GLOBALS['baseurl']}/plugins/brand_guidelines/pages/rdec.php",
         ];
     }
 }
