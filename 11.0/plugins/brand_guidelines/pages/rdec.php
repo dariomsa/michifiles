@@ -15,267 +15,452 @@ if (!acl_can_view_brand_guidelines()) {
 include_once RESOURCESPACE_BASE_PATH . '/include/header.php';
 ?>
 <style>
-.rdec-guide {
-    max-width: 1180px;
-    margin: 24px auto 48px;
-    color: #263238;
+.michi-guide {
+    max-width: 1000px;
+    margin: 40px auto 48px;
+    color: #334155;
+    background: #f8fafc;
 }
-.rdec-hero {
-    background: #1f2937;
-    color: #fff;
-    border-left: 5px solid #0d6efd;
+.michi-header {
+    background: #1e293b;
+    border-bottom: 3px solid #475569;
     border-radius: 8px;
+    color: #fff;
     padding: 28px;
-    box-shadow: 0 10px 28px rgba(0,0,0,.12);
+    margin-bottom: 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.12);
     display: flex;
     justify-content: space-between;
-    gap: 24px;
     align-items: center;
-}
-.rdec-hero h1 {
-    color: #fff;
-    margin: 0 0 6px;
-    font-size: 32px;
-}
-.rdec-hero p {
-    color: #b8c2cc;
-    margin: 0;
-}
-.rdec-badge {
-    background: #0d6efd;
-    color: #fff;
-    border-radius: 999px;
-    padding: 10px 16px;
-    font-weight: 700;
-    white-space: nowrap;
-}
-.rdec-alert {
-    border: 2px solid #dc3545;
-    background: #fff5f5;
-    color: #842029;
-    border-radius: 8px;
-    margin: 24px 0;
-    padding: 22px;
-    display: flex;
     gap: 16px;
 }
-.rdec-alert h2 {
-    color: #842029;
-    margin: 0 0 8px;
-    font-size: 21px;
+.michi-header h1 {
+    color: #fff;
+    font-size: 28px;
+    margin: 0 0 6px;
 }
-.rdec-alert p {
-    margin: 0 0 10px;
+.michi-header p {
+    color: #e2e8f0;
+    margin: 0;
 }
-.rdec-tag {
-    display: inline-block;
-    border-radius: 999px;
-    padding: 5px 10px;
-    margin: 3px 4px 3px 0;
-    font-size: 12px;
+.michi-version {
+    background: #64748b;
+    color: #fff;
+    border-radius: 6px;
+    font-family: monospace;
+    font-size: 13px;
+    padding: 9px 14px;
+    white-space: nowrap;
+}
+.michi-tabs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    margin-bottom: 24px;
+}
+.michi-tab {
+    background: #fff;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    color: #475569;
+    cursor: pointer;
     font-weight: 700;
+    padding: 13px 16px;
+    text-align: center;
 }
-.rdec-tag-danger {
-    background: #dc3545;
+.michi-tab:hover {
+    background: #f1f5f9;
+    color: #0f172a;
+}
+.michi-tab.active {
+    background: #334155;
+    border-color: #334155;
     color: #fff;
 }
-.rdec-tag-outline {
-    border: 1px solid #dc3545;
-    color: #dc3545;
-    background: #fff;
+.michi-pane {
+    display: none;
 }
-.rdec-card {
-    background: #fff;
-    border: 1px solid #e5e7eb;
+.michi-pane.active {
+    display: block;
+}
+.michi-alert {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
     border-radius: 8px;
-    box-shadow: 0 8px 24px rgba(15,23,42,.07);
+    color: #991b1b;
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding: 18px;
+}
+.michi-alert-icon {
+    font-size: 30px;
+    font-weight: 900;
+    line-height: 1;
+}
+.michi-alert h2 {
+    color: #991b1b;
+    font-size: 17px;
+    margin: 0 0 7px;
+}
+.michi-alert p {
+    margin: 0 0 10px;
+}
+.michi-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.05);
     margin-bottom: 24px;
     overflow: hidden;
 }
-.rdec-card-header {
-    color: #fff;
-    font-weight: 700;
+.michi-card-header {
+    background: #f1f5f9;
+    border-bottom: 1px solid #e2e8f0;
+    color: #1e293b;
+    font-weight: 800;
     padding: 14px 18px;
-    font-size: 17px;
 }
-.rdec-green { background: #198754; }
-.rdec-blue { background: #0d6efd; }
-.rdec-dark { background: #212529; }
-.rdec-cyan { background: #0dcaf0; color: #073642; }
-.rdec-card-body {
+.michi-card-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+.michi-card-body {
     padding: 20px;
 }
-.rdec-table {
-    width: 100%;
-    border-collapse: collapse;
+.michi-table-wrap {
+    overflow-x: auto;
 }
-.rdec-table th,
-.rdec-table td {
-    padding: 14px;
-    border-bottom: 1px solid #e5e7eb;
+.michi-table {
+    border-collapse: collapse;
+    font-size: 13px;
+    width: 100%;
+}
+.michi-table th,
+.michi-table td {
+    border-bottom: 1px solid #e2e8f0;
+    padding: 13px;
+    text-align: left;
     vertical-align: top;
 }
-.rdec-table th {
+.michi-table th {
     background: #f8fafc;
-    text-align: left;
 }
-.rdec-grid {
+.michi-grid-2 {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 24px;
+    gap: 16px;
 }
-.rdec-grid-3 {
+.michi-grid-3 {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 16px;
 }
-.rdec-box {
-    background: #f8fafc;
-    border: 1px solid #e5e7eb;
+.michi-box {
+    background: #fff;
+    border: 1px solid #e2e8f0;
     border-radius: 8px;
     padding: 16px;
 }
-.rdec-list {
+.michi-box-accent {
+    border-left: 3px solid #1e293b;
+}
+.michi-box h3 {
+    border-bottom: 1px solid #e2e8f0;
+    color: #1e293b;
+    font-size: 16px;
+    margin: 0 0 11px;
+    padding-bottom: 9px;
+}
+.michi-small {
+    font-size: 13px;
+}
+.michi-muted {
+    color: #64748b;
+}
+.michi-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+.michi-badge {
+    background: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    border-radius: 999px;
+    color: #475569;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 9px;
+}
+.michi-badge-dark {
+    background: #1e293b;
+    border-color: #1e293b;
+    color: #fff;
+}
+.michi-badge-secondary {
+    background: #64748b;
+    border-color: #64748b;
+    color: #fff;
+}
+.michi-badge-danger {
+    background: #dc2626;
+    border-color: #dc2626;
+    color: #fff;
+}
+.michi-badge-outline-danger {
+    background: #fff;
+    border-color: #dc2626;
+    color: #dc2626;
+}
+.michi-badge-key {
+    background: #e2e8f0;
+    border: 1px solid #94a3b8;
+    border-radius: 999px;
+    color: #0f172a;
+    font-size: 12px;
+    font-weight: 800;
+    padding: 5px 10px;
+}
+.michi-list {
     list-style: none;
-    padding: 0;
     margin: 0;
+    padding: 0;
 }
-.rdec-list li {
-    border-top: 1px solid #e5e7eb;
-    padding: 13px 0;
+.michi-list li {
+    padding: 8px 0;
 }
-.rdec-list li:first-child {
-    border-top: 0;
-}
-.rdec-muted {
-    color: #6b7280;
-}
-.rdec-footer {
+.michi-footer {
+    border-top: 1px solid #e2e8f0;
+    color: #64748b;
+    font-size: 13px;
+    margin-top: 24px;
+    padding: 18px 0;
     text-align: center;
-    color: #6b7280;
-    border-top: 1px solid #e5e7eb;
-    padding: 20px 0;
 }
-@media (max-width: 800px) {
-    .rdec-hero,
-    .rdec-alert {
+@media (max-width: 760px) {
+    .michi-header,
+    .michi-alert,
+    .michi-card-header-row {
         display: block;
     }
-    .rdec-badge {
+    .michi-version,
+    .michi-badge-key {
         display: inline-block;
-        margin-top: 16px;
+        margin-top: 10px;
     }
-    .rdec-grid,
-    .rdec-grid-3 {
+    .michi-tabs,
+    .michi-grid-2,
+    .michi-grid-3 {
         grid-template-columns: 1fr;
     }
 }
 </style>
 
-<div class="rdec-guide">
-    <section class="rdec-hero">
+<div class="michi-guide">
+    <header class="michi-header">
         <div>
             <h1>Michipiti FILES</h1>
-            <p>Guía y normativa oficial de carga de contenidos y metadatos</p>
+            <p>Sistema de Gestión de Activos Digitales y Normativa Editorial</p>
         </div>
-        <span class="rdec-badge">Manual de Protocolo</span>
-    </section>
+        <span class="michi-version">Manual Web v2.0</span>
+    </header>
 
-    <section class="rdec-alert" role="alert">
-        <div aria-hidden="true" style="font-size:34px;">!</div>
-        <div>
-            <h2>LO QUE NO SE PUEDE SUBIR BAJO NINGUNA CIRCUNSTANCIA</h2>
-            <p><strong>Ninguna foto o recurso procedente de agencias de noticias internacionales o locales</strong> sin licencia comercial previa.</p>
-            <span class="rdec-tag rdec-tag-danger">NO EFE</span>
-            <span class="rdec-tag rdec-tag-danger">NO AFP</span>
-            <span class="rdec-tag rdec-tag-danger">NO API</span>
-            <span class="rdec-tag rdec-tag-outline">Demás agencias</span>
-        </div>
-    </section>
+    <nav class="michi-tabs" aria-label="Secciones del manual">
+        <button class="michi-tab active" type="button" data-pane="instruccion">Instrucción</button>
+        <button class="michi-tab" type="button" data-pane="taxonomia">Taxonomía</button>
+        <button class="michi-tab" type="button" data-pane="categorizar">Categorizar</button>
+    </nav>
 
-    <section class="rdec-card">
-        <div class="rdec-card-header rdec-green">1. Indicaciones de Fotografía</div>
-        <div class="rdec-card-body" style="padding:0;">
-            <table class="rdec-table">
-                <thead>
-                    <tr>
-                        <th>Origen de la foto</th>
-                        <th>Estatus / Requisito</th>
-                        <th>Detalles y Metadatos</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Imágenes Propias</strong></td>
-                        <td>Autoría directa</td>
-                        <td>Colocar <strong>autor</strong> y llenar todos los metadatos de origen en el sistema.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Imágenes de Cortesía</strong></td>
-                        <td>Crédito obligatorio</td>
-                        <td>Siempre colocar de quién es la foto o institución que la provee.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Imágenes de Coberturas</strong></td>
-                        <td>Cedidas / autorización</td>
-                        <td>Colocar respaldo, créditos y <strong>detallar condiciones de uso</strong>.<br><span class="rdec-muted">Ejemplo: "Uso exclusivo de Instagram por una sola vez".</span></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </section>
-
-    <div class="rdec-grid">
-        <section class="rdec-card">
-            <div class="rdec-card-header rdec-blue">2. Videografía</div>
-            <div class="rdec-card-body">
-                <p class="rdec-muted">Se pueden subir videos siempre y cuando se registren con su información completa de clasificación:</p>
-                <ul class="rdec-list">
-                    <li><strong>Categorías obligatorias</strong><br>Ejemplos: <code>Paisajes de Quito</code>, <code>Verano Quito</code>, <code>Incendio Vicentina</code>.</li>
-                    <li><strong>Datos SEO y registro</strong><br>Llenar datos de búsqueda SEO, fecha exacta de captura, ubicación y descripción.</li>
-                </ul>
+    <div id="michi-pane-instruccion" class="michi-pane active">
+        <section class="michi-alert" role="alert">
+            <div class="michi-alert-icon" aria-hidden="true">!</div>
+            <div>
+                <h2>PROHIBICIÓN ESTRICTA DE MATERIAL DE AGENCIAS</h2>
+                <p class="michi-small">Queda completamente prohibido subir fotografías o recursos provenientes de agencias de noticias internacionales o locales sin licencia comercial explícita.</p>
+                <div class="michi-badges">
+                    <span class="michi-badge michi-badge-danger">NO EFE</span>
+                    <span class="michi-badge michi-badge-danger">NO AFP</span>
+                    <span class="michi-badge michi-badge-danger">NO API</span>
+                    <span class="michi-badge michi-badge-outline-danger">Otras Agencias</span>
+                </div>
             </div>
         </section>
 
-        <section class="rdec-card">
-            <div class="rdec-card-header rdec-dark">3. Diseño e Inteligencia Artificial</div>
-            <div class="rdec-card-body">
-                <h3>Diseñadores</h3>
-                <p class="rdec-muted">Piezas gráficas originales creadas por el equipo de diseño interno.</p>
-                <hr>
-                <h3>Fotos de Inteligencia Artificial</h3>
-                <p class="rdec-muted">Requiere especificar rigurosamente:</p>
-                <span class="rdec-tag rdec-tag-outline">Uso destinado</span>
-                <span class="rdec-tag rdec-tag-outline">Categoría especial IA</span>
-                <span class="rdec-tag rdec-tag-outline">Referencia / herramienta / prompt</span>
+        <section class="michi-card">
+            <div class="michi-card-header">Indicaciones de Fotografía</div>
+            <div class="michi-table-wrap">
+                <table class="michi-table">
+                    <thead>
+                        <tr>
+                            <th style="width:25%;">Origen de la foto</th>
+                            <th style="width:30%;">Requisito</th>
+                            <th style="width:45%;">Detalles y Metadatos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Imágenes Propias</strong></td>
+                            <td><span class="michi-badge michi-badge-dark">Autoría Directa</span></td>
+                            <td>Colocar autoría explícita y llenar metadatos en el sistema.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Imágenes de Cortesía</strong></td>
+                            <td><span class="michi-badge michi-badge-secondary">Crédito Obligatorio</span></td>
+                            <td>Siempre colocar créditos de la fuente o institución emisor.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Imágenes de Coberturas</strong></td>
+                            <td><span class="michi-badge michi-badge-secondary">Autorización / Cedidas</span></td>
+                            <td>Colocar respaldo, créditos y detallar condiciones de uso.<br><em class="michi-muted">Ej. "Uso exclusivo en Instagram por una sola vez".</em></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <div class="michi-grid-2">
+            <section class="michi-card">
+                <div class="michi-card-header">Videografía</div>
+                <div class="michi-card-body michi-small">
+                    <p class="michi-muted">Registro de videos con clasificación completa:</p>
+                    <ul class="michi-list">
+                        <li><strong>Categorías:</strong> <code>Paisajes de Quito</code>, <code>Verano Quito</code>, <code>Incendio Vicentina</code>.</li>
+                        <li><strong>Datos SEO:</strong> Fecha de captura, palabras clave y ubicación.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="michi-card">
+                <div class="michi-card-header">Diseño e Inteligencia Artificial</div>
+                <div class="michi-card-body michi-small">
+                    <p><strong>Diseñadores:</strong> Piezas originales del equipo interno.</p>
+                    <hr>
+                    <p><strong>Fotos / Ilustraciones IA:</strong> Especificar uso destinado, categoría especial "IA" y herramienta/prompt de referencia.</p>
+                </div>
+            </section>
+        </div>
+
+        <section class="michi-card">
+            <div class="michi-card-header">Audiovisuales y Pistas de Audio</div>
+            <div class="michi-card-body michi-small">
+                <p class="michi-muted">Audios musicalizados para video o podcast:</p>
+                <div class="michi-grid-3">
+                    <div class="michi-box"><strong>Copyright:</strong> Detallar si posee derechos o es libre de copyright.</div>
+                    <div class="michi-box"><strong>Estilo / Categoría:</strong> Música Ambiental, Suspenso, Acción, etc.</div>
+                    <div class="michi-box"><strong>Origen y Crédito:</strong> Acreditar autor y fuente de descarga.</div>
+                </div>
             </div>
         </section>
     </div>
 
-    <section class="rdec-card">
-        <div class="rdec-card-header rdec-cyan">4. Audiovisuales y Pistas de Audio</div>
-        <div class="rdec-card-body">
-            <p>Aplica para audios musicalizados destinados a video o podcast:</p>
-            <div class="rdec-grid-3">
-                <div class="rdec-box">
-                    <h3>Copyright</h3>
-                    <p class="rdec-muted">Detallar explícitamente si la pista <strong>tiene o no Copyright</strong> o si es libre de derechos.</p>
-                </div>
-                <div class="rdec-box">
-                    <h3>Categorías de estilo</h3>
-                    <p class="rdec-muted">Clasificar en: música ambiental, suspenso, música de acción, etc.</p>
-                </div>
-                <div class="rdec-box">
-                    <h3>Origen y crédito</h3>
-                    <p class="rdec-muted">Colocar siempre el crédito del autor y especificar de dónde se tomó la pista.</p>
+    <div id="michi-pane-taxonomia" class="michi-pane">
+        <section class="michi-card">
+            <div class="michi-card-header">Configuración de Taxonomía Editorial</div>
+            <div class="michi-card-body">
+                <p class="michi-small michi-muted">Estructura estandarizada para la clasificación de contenidos en el sistema:</p>
+                <div class="michi-grid-3 michi-small">
+                    <div class="michi-box">
+                        <h3>Sección</h3>
+                        <div class="michi-badges">
+                            <span class="michi-badge">Política</span>
+                            <span class="michi-badge">Economía</span>
+                            <span class="michi-badge">Cultura</span>
+                            <span class="michi-badge">Deportes</span>
+                            <span class="michi-badge">Tecnología</span>
+                            <span class="michi-badge">Opinión</span>
+                        </div>
+                    </div>
+                    <div class="michi-box">
+                        <h3>Tipo Editorial</h3>
+                        <div class="michi-badges">
+                            <span class="michi-badge">Noticia</span>
+                            <span class="michi-badge">Entrevista</span>
+                            <span class="michi-badge">Reportaje</span>
+                            <span class="michi-badge">Columna</span>
+                            <span class="michi-badge">Fotogalería</span>
+                            <span class="michi-badge">Video</span>
+                            <span class="michi-badge">Documento</span>
+                        </div>
+                    </div>
+                    <div class="michi-box">
+                        <h3>Cobertura</h3>
+                        <div class="michi-badges">
+                            <span class="michi-badge">Local</span>
+                            <span class="michi-badge">Nacional</span>
+                            <span class="michi-badge">Internacional</span>
+                        </div>
+                    </div>
+                    <div class="michi-box">
+                        <h3>Estado Legal / Derechos</h3>
+                        <div class="michi-badges">
+                            <span class="michi-badge michi-badge-secondary">Propio</span>
+                            <span class="michi-badge michi-badge-danger">Agencia</span>
+                            <span class="michi-badge michi-badge-dark">Cedido</span>
+                            <span class="michi-badge michi-badge-secondary">Uso Restringido</span>
+                            <span class="michi-badge">Expirado</span>
+                        </div>
+                    </div>
+                    <div class="michi-box">
+                        <h3>Atribución y Fechas</h3>
+                        <ul class="michi-list">
+                            <li><strong>Créditos:</strong> Autor / Fotógrafo / Fuente / Crédito.</li>
+                            <li><strong>Cronología:</strong> Fecha de publicación, fecha de captura y vencimiento de derechos.</li>
+                        </ul>
+                    </div>
+                    <div class="michi-box">
+                        <h3>Indexación SEO y Contexto</h3>
+                        <p>Registro de personas mencionadas, lugares, temas y <strong>Keywords SEO Temas Clave</strong>.</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </div>
 
-    <footer class="rdec-footer">
-        <small>Michipiti FILES &copy; Sistema de Gestión de Activos Digitales</small>
+    <div id="michi-pane-categorizar" class="michi-pane">
+        <section class="michi-card">
+            <div class="michi-card-header michi-card-header-row">
+                <span>2. Catalogar - Formulario de Metadatos Obligatorios</span>
+                <span class="michi-badge-key">Requerido SEO</span>
+            </div>
+            <div class="michi-card-body">
+                <p class="michi-small michi-muted">Completa los campos clave para asegurar el correcto procesamiento y posicionamiento SEO:</p>
+                <div class="michi-grid-3 michi-small">
+                    <div class="michi-box michi-box-accent"><strong>Title</strong><br><span class="michi-muted">Título descriptivo optimizado con la palabra clave principal.</span></div>
+                    <div class="michi-box michi-box-accent"><strong>Caption</strong><br><span class="michi-muted">Descripción o leyenda detallada del recurso (Alt Text SEO).</span></div>
+                    <div class="michi-box"><strong>Sección editorial:</strong> Categoría principal del activo.</div>
+                    <div class="michi-box"><strong>Tipo editorial:</strong> Formato o género de la publicación.</div>
+                    <div class="michi-box"><strong>Estado legal / derechos:</strong> Tipo de licencia asignada.</div>
+                    <div class="michi-box"><strong>Autor / redactor:</strong> Redactor o creador del contenido.</div>
+                    <div class="michi-box"><strong>Fotógrafo / videógrafo:</strong> Autor de la captura visual.</div>
+                    <div class="michi-box"><strong>Fuente / agencia:</strong> Entidad proveedora del material.</div>
+                    <div class="michi-box"><strong>Fecha de captura / creación:</strong> Fecha exacta de origen.</div>
+                    <div class="michi-box"><strong>Personas mencionadas:</strong> Personajes o figuras retratadas.</div>
+                    <div class="michi-box"><strong>Lugares:</strong> Ubicación geográfica o espacio físico.</div>
+                    <div class="michi-box michi-box-accent"><strong>Temas editoriales</strong><br><span class="michi-muted">Ejes conceptuales asociados a la publicación.</span></div>
+                    <div class="michi-box michi-box-accent"><strong>Keywords SEO</strong><br><span class="michi-muted">Términos y palabras clave estratégicas para motores de búsqueda y buscadores internos.</span></div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="michi-footer">
+        Michipiti FILES &copy; Sistema de Gestión de Activos Digitales
     </footer>
 </div>
+
+<script>
+jQuery(function () {
+    jQuery('.michi-tab').on('click', function () {
+        const pane = jQuery(this).data('pane');
+        jQuery('.michi-tab').removeClass('active');
+        jQuery(this).addClass('active');
+        jQuery('.michi-pane').removeClass('active');
+        jQuery('#michi-pane-' + pane).addClass('active');
+    });
+});
+</script>
 <?php
 include_once RESOURCESPACE_BASE_PATH . '/include/footer.php';
