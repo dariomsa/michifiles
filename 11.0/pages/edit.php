@@ -1201,6 +1201,67 @@ jQuery(document).ready(function()
 }?>
 
 });
+<?php if (!empty($rdec_filter_editorial_topics)) { ?>
+jQuery(function () {
+    const rdecEditorialTopicMap = {
+        'Política y gobierno': ['Elecciones', 'Gobierno nacional', 'Función legislativa', 'Gobiernos seccionales', 'Relaciones internacionales', 'Partidos y movimientos', 'Protesta social'],
+        'Economía y negocios': ['Macroeconomía', 'Empresas e industria', 'Banca y finanzas', 'Comercio', 'Petróleo y minería', 'Agro y exportación', 'Emprendimiento'],
+        'Justicia y seguridad': ['Delincuencia', 'Narcotráfico', 'Sistema judicial', 'Policía', 'Corrupción', 'Cárceles', 'Seguridad ciudadana'],
+        'Conflicto guerra y paz': ['Conflictos armados', 'Terrorismo', 'Procesos de paz', 'Fuerzas Armadas'],
+        'Desastres y emergencias': ['Sismos y erupciones', 'Inundaciones', 'Incendios', 'Accidentes', 'Gestión de riesgos'],
+        'Educación': ['Escuela y colegio', 'Universidades', 'Investigación académica', 'Políticas educativas'],
+        'Medioambiente': ['Naturaleza y biodiversidad', 'Cambio climático', 'Contaminación', 'Áreas protegidas', 'Agua'],
+        'Salud': ['Salud pública', 'Enfermedades y epidemias', 'Sistema sanitario', 'Nutrición', 'Salud mental'],
+        'Ciencia y tecnología': ['Investigación científica', 'Innovación', 'Internet y redes', 'Espacio', 'Inteligencia artificial'],
+        'Deportes': ['Fútbol', 'Automovilismo', 'Atletismo', 'Selección nacional', 'Juegos Olímpicos', 'Otros deportes'],
+        'Cultura y entretenimiento': ['Artes visuales', 'Música', 'Cine y TV', 'Literatura', 'Patrimonio', 'Espectáculos', 'Medios de comunicación'],
+        'Estilo de vida y ocio': ['Gastronomía', 'Turismo y viajes', 'Moda', 'Hogar', 'Tendencias'],
+        'Trabajo y empleo': ['Empleo y desempleo', 'Sindicatos', 'Condiciones laborales', 'Migración laboral'],
+        'Religión y creencias': ['Iglesia católica', 'Otras confesiones', 'Festividades religiosas'],
+        'Sociedad': ['Familia y comunidad', 'Derechos humanos', 'Género y diversidad', 'Pueblos y nacionalidades', 'Movilidad humana', 'Pobreza y desigualdad'],
+        'Interés humano': ['Historias de vida', 'Efemérides', 'Curiosidades', 'Mascotas y animales', 'Celebraciones'],
+        'Clima y tiempo': ['Pronóstico', 'Fenómenos climáticos'],
+        'Ecuador': ['Azuay', 'Bolívar', 'Cañar', 'Carchi', 'Chimborazo', 'Cotopaxi', 'El Oro', 'Esmeraldas', 'Galápagos', 'Guayas', 'Imbabura', 'Loja', 'Los Ríos', 'Manabí', 'Morona Santiago', 'Napo', 'Orellana', 'Pastaza', 'Pichincha', 'Santa Elena', 'Santo Domingo de los Tsáchilas', 'Sucumbíos', 'Tungurahua', 'Zamora Chinchipe'],
+        'Internacional': ['América Latina', 'Norteamérica', 'Europa', 'Asia', 'África', 'Oceanía']
+    };
+
+    function rdecNodeLabel(input) {
+        return jQuery('label[for="' + input.attr('id') + '"]').text().trim();
+    }
+
+    function rdecNodeContainer(input) {
+        return input.closest('td, li, div');
+    }
+
+    function rdecSelectedEditorialSection() {
+        const checked = jQuery('input[name="nodes[88][]"]:checked').first();
+        return checked.length ? rdecNodeLabel(checked) : '';
+    }
+
+    function rdecFilterEditorialTopics() {
+        const section = rdecSelectedEditorialSection();
+        const allowedTopics = section && rdecEditorialTopicMap[section] ? rdecEditorialTopicMap[section] : [];
+
+        jQuery('input[name="nodes[100][]"]').each(function () {
+            const topicInput = jQuery(this);
+            const visible = allowedTopics.indexOf(rdecNodeLabel(topicInput)) !== -1;
+            rdecNodeContainer(topicInput).toggle(visible);
+            if (!visible) {
+                topicInput.prop('checked', false);
+            }
+        });
+    }
+
+    jQuery(document).on('change', 'input[name="nodes[88][]"]', function () {
+        if (jQuery(this).is(':checked')) {
+            jQuery('input[name="nodes[88][]"]').not(this).prop('checked', false);
+        }
+        rdecFilterEditorialTopics();
+    });
+
+    rdecFilterEditorialTopics();
+});
+<?php } ?>
 <?php hook("editadditionaljs");
 
 # Function to automatically save the form on field changes, if configured.
